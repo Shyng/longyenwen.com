@@ -1,6 +1,5 @@
 import React from 'react';
 import { lywFont } from 'components/lyw-svg/index.jsx';
-// console.log(lywSvg, lywFont);
 
 class LywView extends React.Component {
   constructor(props) {
@@ -33,7 +32,7 @@ class LywView extends React.Component {
    */
   escXor = (str) => {
     // test:
-    str = 'mei3天 dou1 有 javaskript。mei2有 \\` l0 `转\\`义zhuan3` AND hai2有 `zai4转义`。学 d0 \\` fei1chang2 快！';
+    // str = '`p5` 12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 \\` l0 `转\\`义zhuan3` AND hai2有 `zai4转义`。学 d0 \\` fei1chang2 快！';
     // mei3|--|dou1|--|javaskript|--|mei2|--|l0|--|hai2|--|d0|--|fei1chang2|
     // end test
     const len = str.length;
@@ -55,8 +54,8 @@ class LywView extends React.Component {
         pushInForm(startI, len);
         break;
       }
-      let isConterEsc = str[i + curr.index - 1] === '\\'; // 伪转义
-      if (isConterEsc) {
+      let falseEsc = str[i + curr.index - 1] === '\\'; // 伪转义
+      if (falseEsc) {
         // 捕捉伪转义。为了behindlook忙到2点
         // console.log('get ' + str[i + curr.index - 1]);
         curr = patt.exec(str.slice(i = i + curr.index + 1, len));
@@ -73,15 +72,18 @@ class LywView extends React.Component {
   }
   lywXor = (str) => {
     const len = str.length;
-    const patt = /[a-z]+[0-4]?/;
+    const patt = /[a-z]+[0-5]/;
     let result = [];
     let i = 0;
     let n = 0;
     let curr;
     const pushInForm = (startI, index, lyw) => {
-      index && console.log('in Form', str.slice(startI, startI + index));
+      // index && console.log('in Form', str.slice(startI, startI + index));
       index && result.push(str.slice(startI, startI + index));
-      lyw && result.push(lywFont(lyw, startI));
+      lyw && result.push(lywFont({
+        code: lyw,
+        key: startI,
+      }));
     }
     while (n < 22) {
       let startI = i; // 先存初始值i

@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 // import {Input, Button} from 'antd';
 
 import './index.less';
-import LywView from './lyw-view/index.jsx';
+import LywView from 'components/lyw-view/index.jsx';
 
 class Editor extends React.Component {
   constructor(props) {
