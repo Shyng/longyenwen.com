@@ -3,7 +3,24 @@ import fontHei from './font-hei.jsx';
 
 // const ffff = 'ffff';
 export default {
-  lywFont
+  lywFont,
+};
+
+const svgProps = {
+  // key,
+  width: 450,
+  height: 600,
+  version: '1.1',
+  xmlns: 'http://www.w3.org/2000/svg',
+};
+
+const strokeStyle = {
+  stroke: '#000000',
+  strokeLinecap: null,
+  strokeLinejoin: null,
+  strokeDasharray: null,
+  strokeWidth: 0,
+  fill: '#3f3f3f',
 };
 
 export const lywFont = ({
@@ -19,15 +36,36 @@ export const lywFont = ({
     phthList = parsePhthHeng(code);
   } else {
     phthList = parsePhth(code);
+    console.log(phthList);
+    // forEach & return svg
+    return (
+      <svg {...svgProps} key={key}>
+        {
+          phthList.map((phth, pKey) => {
+            return (
+              <g key={pKey}>
+                {
+                  fontHei(phth).map((d, dKey) => {
+                    return <path d={d} key={dKey} {...strokeStyle} />;
+                  })
+                }
+              </g>
+            );
+          })
+        }
+      </svg>
+    );
   }
-  return phthList.join('#').toUpperCase();
+  return `phthList.join('#').toUpperCase()`;
 
-  let font =
-    <svg key={key} width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="10" cy="5" r="4" stroke="black" fill="red"/>
-</svg>
-  // let font = code.toUpperCase();
-  return font;
+
+
+//   let font =
+//     <svg key={key} width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
+//   <circle cx="10" cy="5" r="4" stroke="black" fill="red"/>
+// </svg>
+//   // let font = code.toUpperCase();
+//   return font;
 };
 
 /**
@@ -81,7 +119,42 @@ const parsePhth = (code) => {
     code = code.slice(1);
   }
   code.length > 0 && phthList.push(code); //parse 剩下的部件
-  // console.log(phthList);
+  // 不好意思，又要遍历一次了
+  /*根据部件数量分配位置*/
+
+  // console.log('before: ', phthList);
+  switch (phthList.length) {
+    case 4:
+      for (var i = 0; i < 4; phthList[i] += i + 1, i++);
+      break;
+    case 3:
+      if (/^[iuv]$/.test(phthList[1]) && phthList[2][0] != "n" && phthList[1] + phthList[2] !== "uo") {
+        phthList[0] += "1"; //排除uo
+        phthList[1] += "2";
+        phthList[2] += "34";
+      } else {
+        phthList[0] += "12";
+        phthList[1] += "3";
+        phthList[2] += "4";
+      }
+      break;
+    case 2:
+      if (
+        /^[bpmfdtnlgkhjqxrzcsyw]$/.test(phthList[0]) ||
+        (phthList[0] == "v" && phthList[1] != "n")
+      ) {
+        phthList[0] += "12";
+        phthList[1] += "34";
+      } else {
+        phthList[0] += "5";
+        phthList[1] += "6";
+      }
+      break;
+    case 1:
+      phthList[0] += "14";
+      break;
+  }
+  // console.log('after', phthList);
   return phthList;
 }
 

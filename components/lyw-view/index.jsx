@@ -33,44 +33,33 @@ class LywView extends React.Component {
   escXor = (str) => {
     // test:
     // str = '`p5` 12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 \\` l0 `转\\`义zhuan3` AND hai2有 `zai4转义`。学 d0 \\` fei1chang2 快！';
-    // mei3|--|dou1|--|javaskript|--|mei2|--|l0|--|hai2|--|d0|--|fei1chang2|
+    // str = '12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 {转zhuan3义} l0。AND hai2有 {{转zhuan3yi4转}} dou1 有！'
     // end test
     const len = str.length;
-    // let patt = /(?<!`)`(?!`)/; // unescape `` // behindlook死不瞑目
-    const patt = /`/; // unescape V`
+    const patt = /\{[^\}]+?\}/;
     let i = 0;
-    let n = 0; // 次数，用于区别奇偶数的`
+    let n = 0; // 次数，现在只做安全用
     let result = [];
-    let curr; // 当前exec返回结果
-    const pushInForm = (startI, endI) => {
-      let part = n % 2 ? this.lywXor(str.slice(startI, endI)) : str.slice(startI, endI);
-      result.push(part);
-    }
-    while (n < 99) {
-      let startI = i; // 先存初始值i
-      n++;
-      curr = patt.exec(str.slice(i, len));
+    let curr; // 当前匹配返回结果
+    while (n++ < 99) {
+      let range = str.slice(i, len);
+      curr = range.match(patt);
+      // console.log(curr);
       if (!curr) {
-        pushInForm(startI, len);
+        result.push(this.lywXor(range));
         break;
       }
-      let falseEsc = str[i + curr.index - 1] === '\\'; // 伪转义
-      if (falseEsc) {
-        // 捕捉伪转义。为了behindlook忙到2点
-        // console.log('get ' + str[i + curr.index - 1]);
-        curr = patt.exec(str.slice(i = i + curr.index + 1, len));
-        if (!curr) {
-          pushInForm(startI, len);
-          break;
-        }
-      }
-      curr.index && pushInForm(startI, i = i + curr.index);
-      i++;
+      result = result.concat([
+        this.lywXor(range.slice(0, curr.index)),
+        curr[0].slice(1, curr[0].length - 1)
+      ]);
+      i += curr.index + curr[0].length;
     }
-    console.log('escArr ', result);
+    // console.log('escArr ', result);
     return result;
   }
   lywXor = (str) => {
+    // return str.toUpperCase();
     const len = str.length;
     const patt = /[a-z]+[0-5]/;
     let result = [];
