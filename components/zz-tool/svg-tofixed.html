@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<style>
+			#res {
+				    float: right;
+    background: #cdd;
+    width: 45%;
+    height: 100%;
+			}
+			#src {
+				float: left;
+    background: #cdd;
+    width: 50%;
+    height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea name="" id="src" cols="130" rows="40"></textarea>
+		<button id="btn">btn</button>
+		<textarea id="res"></textarea>
+		<script>
+			var btn = document.getElementById('btn');
+			var src = document.getElementById('src');
+			var res = document.getElementById('res');
+			document.getElementById('btn').onclick = function () {
+				res.value = src.value.replace(/\d+\.\d+/g, function(d) {
+					return (+d).toFixed(2);
+				})
+			}
+		</script>
+	</body>
+</html>

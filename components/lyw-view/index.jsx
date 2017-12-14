@@ -19,15 +19,6 @@ class LywView extends React.Component {
     );
   }
   /**
-   * @struct
-   p => [
-     ' ',
-     ``,
-     ' ',
-     ``,
-     ' '
-   ]
-   * @param  {[type]} p [description]
    * @return {[type]}   [description]
    */
   escXor = (str) => {
@@ -72,8 +63,10 @@ class LywView extends React.Component {
       lyw && result.push(lywFont({
         code: lyw,
         key: startI,
+        fontStyle: this.props.fontStyle,
       }));
     }
+    // TODO range
     while (n < 22) {
       let startI = i; // 先存初始值i
       n++;
@@ -89,9 +82,9 @@ class LywView extends React.Component {
     return result;
   }
   render() {
-    const { value } = this.props;
+    const { value, fontStyle } = this.props;
     return (
-      <div className="lyw-view lyw-col">
+      <div className="lyw-view lyw-col" style={fontStyle}>
         {this.paragraphParser(value)}
       </div>
     );

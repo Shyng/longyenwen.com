@@ -6,13 +6,7 @@ export default {
   lywFont,
 };
 
-const svgProps = {
-  // key,
-  width: 450,
-  height: 600,
-  version: '1.1',
-  xmlns: 'http://www.w3.org/2000/svg',
-};
+
 
 const strokeStyle = {
   stroke: '#000000',
@@ -28,6 +22,14 @@ export const lywFont = ({
   key,
   fontStyle = {},
 }) => {
+  const { fontSize = 24 } = fontStyle;
+  const svgProps = {
+    width: fontSize,
+    height: fontSize * 1.5,
+    version: '1.1',
+    xmlns: 'http://www.w3.org/2000/svg',
+    viewBox: '0 -25 100 150',
+  };
   // 可进一步检查是不是龙彦code
   let phthList = [];
   const HENG = code[code.length - 1] === '5';
@@ -36,10 +38,9 @@ export const lywFont = ({
     phthList = parsePhthHeng(code);
   } else {
     phthList = parsePhth(code);
-    console.log(phthList);
-    // forEach & return svg
+    // console.log(phthList);
     return (
-      <svg {...svgProps} key={key}>
+      <svg {...svgProps} key={key} style={{ verticalAlign: 'top' }}>
         {
           phthList.map((phth, pKey) => {
             return (
@@ -60,12 +61,12 @@ export const lywFont = ({
 
 
 
-//   let font =
-//     <svg key={key} width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
-//   <circle cx="10" cy="5" r="4" stroke="black" fill="red"/>
-// </svg>
-//   // let font = code.toUpperCase();
-//   return font;
+  //   let font =
+  //     <svg key={key} width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  //   <circle cx="10" cy="5" r="4" stroke="black" fill="red"/>
+  // </svg>
+  //   // let font = code.toUpperCase();
+  //   return font;
 };
 
 /**
@@ -154,7 +155,13 @@ const parsePhth = (code) => {
       phthList[0] += "14";
       break;
   }
-  // console.log('after', phthList);
+  console.log('after', phthList);
+  if (+tone) {
+    phthList.push('$' + tone);
+  } else {
+    console.log('heng')
+  }
+
   return phthList;
 }
 

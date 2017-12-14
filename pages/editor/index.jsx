@@ -15,15 +15,20 @@ class Editor extends React.Component {
   }
   handleEditorChange(e = {}) {
     const { value = '' } = e.target || {};
-    this.setState({ value });
+    this.setState({
+      value
+    });
   }
   render() {
     const { value } = this.state;
+    const fontStyle = {
+      fontSize: 48,
+    }
     // console.log(value);
     return (
       <div className="lyw-editor-app">
-        <LywView value={value} />
-        <div className="lyw-editor lyw-col">
+        <LywView value={value} fontStyle={fontStyle} />
+        <div className="lyw-editor lyw-col" style={fontStyle}>
           <textarea onChange={this.handleEditorChange} />
         </div>
       </div>
