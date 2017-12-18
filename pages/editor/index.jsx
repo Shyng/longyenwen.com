@@ -22,7 +22,7 @@ class Editor extends React.Component {
   render() {
     const { value } = this.state;
     const fontStyle = {
-      fontSize: 48,
+      fontSize: 16,
     }
     // console.log(value);
     return (
@@ -37,3 +37,17 @@ class Editor extends React.Component {
 }
 
 ReactDom.render(<Editor />, document.getElementById('root'));
+
+
+/**
+ *
+ 调试 效果 出来 不一样
+ tiao2she4 xiao4guo3 chu1lai2 bu4一yang4
+ */
+
+/**
+ * @todo
+ * 边距问题
+ * 剩余字符
+ *
+ */

@@ -22,17 +22,24 @@ export const lywFont = ({
   key,
   fontStyle = {},
 }) => {
-  const { fontSize = 24 } = fontStyle;
+  const {
+    fontSize = 24
+  } = fontStyle;
   const svgProps = {
     width: fontSize,
     height: fontSize * 1.5,
     version: '1.1',
     xmlns: 'http://www.w3.org/2000/svg',
-    viewBox: '0 -25 100 150',
+    // viewBox: '0 -25 100 150',
+    viewBox: '0 5 100 100',
   };
   // 可进一步检查是不是龙彦code
   let phthList = [];
-  const HENG = code[code.length - 1] === '5';
+  const tone = code[code.length - 1];
+  if (tone === '0') {
+    svgProps.viewBox = '0 -15 100 100';
+  }
+  const HENG = tone === '5';
   // code.
   if (HENG) {
     phthList = parsePhthHeng(code);
@@ -86,6 +93,8 @@ const parsePhth = (code) => {
   //转u为v
   code = code.replace(/(yu)|ü/, "v");
   code = code.replace(/([jqx])u/, "$1v");
+  //转结尾的uo为o，新增171215
+  code = code.replace(/uo$/, "o");
   //转结尾的un为uen
   code = code.replace(/un$/, "uen");
   //转结尾的ie, ve为iE, vE
@@ -112,7 +121,8 @@ const parsePhth = (code) => {
     phthList.push(code.match(reg));
     code = code.slice(1);
   }
-  if (code.match(reg = /^Ei|^ao|^ai|^ng/)) {
+  // if (code.match(reg = /^Ei|^ao|^ai|^ng/)) {
+  if (code.match(reg = /^ng/)) {
     phthList.push(code.match(reg));
     code = code.slice(2);
   } else if (code.match(reg = /^a|^o|^e(?!r)|^E|^i|^u|^v/)) {
@@ -147,15 +157,15 @@ const parsePhth = (code) => {
         phthList[0] += "12";
         phthList[1] += "34";
       } else {
-        phthList[0] += "5";
-        phthList[1] += "6";
+        phthList[0] += "13";
+        phthList[1] += "24";
       }
       break;
     case 1:
       phthList[0] += "14";
       break;
   }
-  console.log('after', phthList);
+  // console.log('after', phthList);
   if (+tone) {
     phthList.push('$' + tone);
   } else {
