@@ -6,25 +6,18 @@ import './index.less';
 class LywView extends React.Component {
   constructor(props) {
     super(props);
-  }
-  paragraphParser = (value) => {
-    let pList = value.split('\n');
-    // console.log(pList);
-    return (
-      <div className="lyw-paragraph">
-        {
-          pList.map((p, index) => {
-            return <pre key={index}>{this.escXor(p)}</pre>;
-          })
-        }
-      </div>
-    );
+    this.osIsWin = navigator.userAgent.indexOf('Windows') > -1;
+    this.cls = 'lyw-view lyw-col';
+    this.osIsWin && (cls += ' is-win');
   }
   /**
    * @return {[type]}   [description]
    */
   escXor = (str) => {
     // test:
+    // str = "target";
+    // str = 'bayandur5 gulyander5 nayzuri5 osymatan5 banlangen5';
+    // str = 'cheistrusharing5 harPu5 mitsaRf5';
     // str = '`p5` 12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 \\` l0 `转\\`义zhuan3` AND hai2有 `zai4转义`。学 d0 \\` fei1chang2 快！';
     // str = '12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 {转zhuan3义} l0。AND hai2有 {{转zhuan3yi4转}} dou1 有！'
     // str = 'zhe2she4 te2shu1 魔法    地方 ta3，号。{zhuan3yi4 转yi4} 大幅度 mo4。';
@@ -56,7 +49,8 @@ class LywView extends React.Component {
     // console.log(str);
     // return str.toUpperCase();
     const len = str.length;
-    const patt = /[a-z]+[0-5]/;
+    // const patt = /[a-z]+[0-5]/;
+    const patt = /([a-z]+[0-4])|([a-z'\-]{2,}5)/;
     let result = [];
     let i = 0;
     let n = 0;
@@ -74,7 +68,7 @@ class LywView extends React.Component {
         fontStyle: this.props.fontStyle,
       }));
     }
-    // TODO range
+    // TODO: range
     while (n < 999) {
       let startI = i; // 先存初始值i
       n++;
@@ -91,14 +85,20 @@ class LywView extends React.Component {
         break;
       }
     }
-    console.log(result);
+    // console.log(result);
     return result;
   }
   render() {
-    const { value, fontStyle } = this.props;
+    const { dataSource, fontStyle } = this.props;
+    // console.log(dataSource);
+
     return (
-      <div className="lyw-view lyw-col" style={fontStyle}>
-        {this.paragraphParser(value)}
+      <div className={this.cls} style={fontStyle}>
+        {
+          dataSource.map((p, key) => {
+            return <pre className="lyw-paragraph" key={key}>{this.escXor(p)}</pre>;
+          })
+        }
       </div>
     );
   }

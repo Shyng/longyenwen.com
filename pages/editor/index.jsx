@@ -10,26 +10,32 @@ class Editor extends React.Component {
     super(props);
     this.state = {
       value: '',
+      viewData: [],
     };
-    this.handleEditorChange = this.handleEditorChange.bind(this);
   }
-  handleEditorChange(e = {}) {
-    const { value = '' } = e.target || {};
+  handleEditorChange = (e = {}) => {
+    let { value = '' } = e.target || {};
+    // value = value.replace(/dd/g, 'D');
     this.setState({
-      value
+      value,
+      viewData: this.produceViewData(value),
     });
   }
+  produceViewData = (value) => {
+    let viewData = value.split('\n');
+    return viewData;
+  }
   render() {
-    const { value } = this.state;
+    const { value, viewData } = this.state;
     const fontStyle = {
-      fontSize: 16,
+      fontSize: 18,
     }
     // console.log(value);
     return (
       <div className="lyw-editor-app">
-        <LywView value={value} fontStyle={fontStyle} />
+        <LywView dataSource={viewData} fontStyle={fontStyle} />
         <div className="lyw-editor lyw-col" style={fontStyle}>
-          <textarea onChange={this.handleEditorChange} />
+          <textarea onChange={this.handleEditorChange} value={value} spellCheck="false" />
         </div>
       </div>
     );
@@ -38,16 +44,7 @@ class Editor extends React.Component {
 
 ReactDom.render(<Editor />, document.getElementById('root'));
 
-
-/**
- *
- 调试 效果 出来 不一样
- tiao2she4 xiao4guo3 chu1lai2 bu4一yang4
- */
-
 /**
  * @todo
- * 边距问题
- * 剩余字符
  *
  */

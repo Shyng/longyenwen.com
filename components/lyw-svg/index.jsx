@@ -1,12 +1,11 @@
 import React from 'react';
 import fontHei from './font-hei.jsx';
-
+// window.test = fontHei;
+// log(fontHei('j12'));
 // const ffff = 'ffff';
 export default {
   lywFont,
 };
-
-
 
 const strokeStyle = {
   stroke: '#000000',
@@ -31,31 +30,62 @@ export const lywFont = ({
     version: '1.1',
     xmlns: 'http://www.w3.org/2000/svg',
     // viewBox: '0 -25 100 150',
-    viewBox: '0 5 100 100',
+    viewBox: '0 0 100 100',
   };
   // 可进一步检查是不是龙彦code
-  let phthList = [];
+  // let phthList = [];
   const tone = code[code.length - 1];
-  if (tone === '0') {
-    svgProps.viewBox = '0 -15 100 100';
-  }
   const HENG = tone === '5';
+  // log('bbb',code)
   // code.
   if (HENG) {
-    phthList = parsePhthHeng(code);
+    const HENG_W = 55;
+    // 还要断音节，防止过长
+    let syllList = parsePhthHeng(code.slice(0, code.length - 1));
+    // log('sLIst: ', JSON.stringify(syllList));
+    // return syllList.join('|');
+    return (
+      <span key={key}>
+        {
+          syllList.map((syll, svgKey) => {
+            svgProps.viewBox = `10 -20 ${HENG_W * syll.length} 100`;
+            svgProps.width = fontSize / 2 * syll.length;
+            // log(syll);
+            return (
+              <svg {...svgProps} key={svgKey} style={{ verticalAlign: 'top' }}>
+                {
+                  syll.map((phth, gKey) => (
+                    <g key={gKey} transform={`translate(${HENG_W * gKey} 0)`}>
+                      {
+                        fontHei(phth).map(
+                          (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
+                        )
+                      }
+                    </g>
+                  ))
+                }
+              </svg>
+            );
+          })
+        }
+      </span>
+    );
   } else {
-    phthList = parsePhth(code);
+    if (tone === '0') {
+      svgProps.viewBox = '0 -15 100 100';
+    }
+    let phthList = parsePhth(code);
     // console.log(phthList);
     return (
       <svg {...svgProps} key={key} style={{ verticalAlign: 'top' }}>
         {
-          phthList.map((phth, pKey) => {
+          phthList.map((phth, gKey) => {
             return (
-              <g key={pKey}>
+              <g key={gKey}>
                 {
-                  fontHei(phth).map((d, dKey) => {
-                    return <path d={d} key={dKey} {...strokeStyle} />;
-                  })
+                  fontHei(phth).map(
+                    (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
+                  )
                 }
               </g>
             );
@@ -64,16 +94,7 @@ export const lywFont = ({
       </svg>
     );
   }
-  return `phthList.join('#').toUpperCase()`;
-
-
-
-  //   let font =
-  //     <svg key={key} width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  //   <circle cx="10" cy="5" r="4" stroke="black" fill="red"/>
-  // </svg>
-  //   // let font = code.toUpperCase();
-  //   return font;
+  // return `phthList.join('#').toUpperCase()`;
 };
 
 /**
@@ -139,7 +160,10 @@ const parsePhth = (code) => {
       for (var i = 0; i < 4; phthList[i] += i + 1, i++);
       break;
     case 3:
-      if (/^[iuv]$/.test(phthList[1]) && phthList[2][0] != "n" && phthList[1] + phthList[2] !== "uo") {
+      if (
+        /^[iuv]$/.test(phthList[1]) && phthList[2][0] != "n" &&
+        phthList[1] + phthList[2] !== "uo"
+      ) {
         phthList[0] += "1"; //排除uo
         phthList[1] += "2";
         phthList[2] += "34";
@@ -180,5 +204,85 @@ const parsePhth = (code) => {
  * @return {[type]} [description]
  */
 const parsePhthHeng = (code) => {
-  // 也许需要另备svg框
+  let rafi = [
+    []
+  ]; // 里面先装一个篮子先
+  const vowelPatt = /[aieouëü]/;
+  const dcPatt = /ng|sh|ch|gh|zh|ts|dz|tz|kk|pp|tt|bh|dh|kh|rr/;
+  // const dcEnds = ['g', 'h', 's', 'z'];
+  let right = '';
+  // NOTE 这里可以加 -
+  // 从后面开始：
+  const LEN = code.length;
+  let i = LEN - 1;
+  let n = 0;
+  // log('code =', code)
+  // let j = 0;
+  for (; i >= 0;) {
+    // log(i)
+    let curr = code[i];
+    // log('rafi per step: ', JSON.stringify(rafi));
+    let basket = rafi[0]; // 篮子
+    /**
+    * @struct 条件判断的层次
+    * - 是元音
+    * - 是特殊元音，有'的
+    * - 是辅音
+    *   - 是dc辅音
+    *   - 是r
+    *   - 是其他辅音
+    */
+    if (vowelPatt.test(curr)) {
+      basket.unshift(curr);
+      right = curr;
+      i--;
+      // log('===v')
+    } else if (curr === '\'') {
+      if (code[i - 1] && /[ue]/.test(code[i - 1])) {
+        // log(88)
+        curr = {
+          e: 'ë',
+          u: 'ü',
+        }[code[i - 1]];
+        log(code[i - 1], curr)
+        basket.unshift(curr);
+        right = curr;
+        i -= 2;
+      } else {
+        i--; // 直接跳过
+      }
+    } else {
+      vowelPatt.test(right) && rafi.unshift([]);
+      if (code[i - 1] && dcPatt.test(code[i - 1] + curr)) {
+        // let withLeft = code[i - 1] + curr;
+        curr = (code[i - 1] + curr);
+        basket.unshift(curr);
+        right = curr; // 1个还是2个？
+        i -= 2;
+        // log('===cc')
+      } else if (
+        curr === 'r' &&
+        code[i - 1] && vowelPatt.test(code[i - 1]) &&
+        (!right || !vowelPatt.test(right))
+      ) {
+        basket.unshift('er');
+        right = 'er';
+        i--;
+      } else {
+        basket.unshift(curr);
+        right = curr;
+        i--;
+        // log('===c')
+      }
+    }
+    if (++n > 999) {
+      break;
+    }
+  }
+  // log('after for: ', JSON.stringify(rafi));
+  if (rafi.length > 1 && !vowelPatt.test(rafi[0].join(''))) {
+    rafi.splice(0, 2, [...rafi[0], ...rafi[1]]);
+  }
+  log('in rafi: ', JSON.stringify(rafi));
+  return rafi;
 }
