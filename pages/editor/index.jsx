@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 
 import './index.less';
 import LywView from 'components/lyw-view/index.jsx';
+import LywNav from './lyw-nav/index.jsx';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -23,17 +24,24 @@ class Editor extends React.Component {
   }
   produceViewData = (value) => {
     let viewData = value.split('\n');
-    return viewData;
+    return viewData.map((prg) => ({ ss: prg }));
   }
   render() {
     const { value, viewData } = this.state;
     const fontStyle = {
       fontSize: 18,
     }
-    // console.log(value);
+    // console.log(viewData);
     return (
-      <div className="lyw-editor-app">
-        <LywView dataSource={viewData} fontStyle={fontStyle} />
+      <div className="lyw-editor-app theme-cold">
+        <LywNav />
+        <LywView
+          className="lyw-col"
+          dataSource={viewData}
+          fontStyle={fontStyle}
+          viewType1="single"
+          langs={['ss']}
+        />
         <div className="lyw-editor lyw-col" style={fontStyle}>
           <textarea onChange={this.handleEditorChange} value={value} spellCheck="false" />
         </div>

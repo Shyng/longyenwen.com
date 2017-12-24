@@ -7,9 +7,77 @@ class LywView extends React.Component {
   constructor(props) {
     super(props);
     this.osIsWin = navigator.userAgent.indexOf('Windows') > -1;
-    this.cls = 'lyw-view lyw-col';
-    this.osIsWin && (cls += ' is-win');
+    this.cls = `lyw-view ${
+      props.className || ''
+      } ${
+      this.osIsWin ? 'is-win' : ''
+      }`;
+    // this.osIsWin && (cls += ' is-win');
+    this.state = {
+      fontStyle: Object.assign({
+        fontSize: 20,
+        color: '#333',
+      }, props.fontStyle),
+    };
   }
+  static defaultProps = {
+    viewType: 'vertical', // 竖着一起展示
+    langs: ['ss'],
+    animType: 'fade',
+  };
+  /**
+   * @struct PropType 
+   * - viewType: oneOf(['vertical', 'horizontal', 'hover'(<=2), 'click'])
+   */
+  render() {
+    // const { fontStyle } = this.props;
+    // console.log(viewType, langs);
+    return (
+      <div className={this.cls}>
+        {this._renderMulti()}
+      </div>
+    );
+  }
+  _renderMulti = () => {
+    const { dataSource, viewType, langs, animType } = this.props;
+    const { fontStyle } = this.state;
+    // if (['vertical', 'horizontal'].includes(viewType)) {
+    return (
+      <div className="lyw-multi">
+        {
+          dataSource.map((p, key) => {
+            return (
+              <div className={`lyw-paragraph view-type-${viewType} anim-type-${animType}`} key={key}>
+                {
+                  langs.map((lang, lKey) => {
+                    let lanContent = p[lang];
+                    if (lang === 'ss') {
+                      lanContent = this.escXor(lanContent);
+                    }
+                    return (
+                      <pre 
+                        key={lKey}
+                        className={`lyw-lang-${lang} lyw-lang-index-${lKey}`}
+                        style={fontStyle}
+                      >{lanContent}</pre>
+                    );
+                  })
+                }
+              </div>
+            );
+          })
+        }
+      </div>
+    );
+    // }
+    // return this._renderMulti();
+  }
+  // _renderMulti = () => {
+  //   const { dataSource, viewType, langs, animType } = this.props;
+  //   if (viewType === 'all'){
+
+  //   }
+  // }
   /**
    * @return {[type]}   [description]
    */
@@ -58,17 +126,12 @@ class LywView extends React.Component {
     const pushInForm = (startI, index, code) => {
       // index && console.log('in Form', str.slice(startI, startI + index));
       index && result.push(str.slice(startI, startI + index));
-      // if (code === ' ') {
-      //   console.log(code);
-      //   return;
-      // }
       code && result.push(lywFont({
         code,
         key: startI,
-        fontStyle: this.props.fontStyle,
+        fontStyle: this.state.fontStyle,
       }));
     }
-    // TODO: range
     while (n < 999) {
       let startI = i; // 先存初始值i
       n++;
@@ -87,20 +150,6 @@ class LywView extends React.Component {
     }
     // console.log(result);
     return result;
-  }
-  render() {
-    const { dataSource, fontStyle } = this.props;
-    // console.log(dataSource);
-
-    return (
-      <div className={this.cls} style={fontStyle}>
-        {
-          dataSource.map((p, key) => {
-            return <pre className="lyw-paragraph" key={key}>{this.escXor(p)}</pre>;
-          })
-        }
-      </div>
-    );
   }
 }
 
