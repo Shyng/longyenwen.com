@@ -14,6 +14,9 @@ class Editor extends React.Component {
       viewData: [],
     };
   }
+  componentDidMount() {
+    
+  }
   handleEditorChange = (e = {}) => {
     let { value = '' } = e.target || {};
     // value = value.replace(/dd/g, 'D');
@@ -30,6 +33,7 @@ class Editor extends React.Component {
     const { value, viewData } = this.state;
     const fontStyle = {
       fontSize: 18,
+      // lineHeight: '24px',
     }
     // console.log(viewData);
     return (
@@ -38,7 +42,7 @@ class Editor extends React.Component {
         <LywView
           className="lyw-col"
           dataSource={viewData}
-          fontStyle={fontStyle}
+          fontStyle={{ ...fontStyle, color: '#174458', fill: '#174458' }}
           viewType1="single"
           langs={['ss']}
         />

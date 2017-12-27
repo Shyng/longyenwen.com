@@ -1,28 +1,47 @@
-.lyw-multi {
-    pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-    }
-    .view-type-hover {
-        cursor: default;
-        position: relative;
+.lyw-view {
+    .lyw-multi {
+        display: inline-block;
         pre {
-            transition: all .4s; // 默认fade
-            -webkit-transition: all .4s;
-            -o-transition: all .4s;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        .lyw-lang-index-1 {
-            opacity: 0;
-            position: absolute; 
-            top: 0;
-        }
-        &:hover {
-            .lyw-lang-index-0 {
-                opacity: 0; // display: none;
+        .view-type-hover {
+            cursor: default;
+            position: relative;
+            pre {
+                font-family: Menlo, Courier, monospace; // Consolas有lineheight问题
+                width: 100%;
+                transition: all .4s; // 默认fade
+                -webkit-transition: all .4s;
+                -o-transition: all .4s;
             }
             .lyw-lang-index-1 {
-                opacity: 1; // display: block;
+                opacity: 0;
+                position: absolute;
+                top: 0;
             }
+        }
+    }
+    /* 特殊位置 */
+    &.align-center .anim-type-fade {
+        text-align: center;
+        padding-left: 16px; // 防止某行被挤成多行
+        padding-right: 16px;
+        .lyw-lang-index-1 {
+            left: 0;
+        }
+    }
+}
+
+
+/* 很高明吧 */
+button:hover .lyw-view {
+    .view-type-hover {
+        .lyw-lang-index-0 {
+            opacity: 0;
+        }
+        .lyw-lang-index-1 {
+            opacity: 1;
         }
     }
 }

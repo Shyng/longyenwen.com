@@ -1,5 +1,6 @@
 import React from 'react';
 import fontHei from './font-hei.jsx';
+import { DEFAULT_FONT_SIZE } from 'components/_utils.js';
 // window.test = fontHei;
 // log(fontHei('j12'));
 // const ffff = 'ffff';
@@ -7,13 +8,13 @@ export default {
   lywFont,
 };
 
-const strokeStyle = {
+const defaultStrokeStyle = {
   stroke: '#000000',
   strokeLinecap: null,
   strokeLinejoin: null,
   strokeDasharray: null,
   strokeWidth: 0,
-  fill: '#3f3f3f',
+  // fill: '#333',
 };
 
 export const lywFont = ({
@@ -22,16 +23,26 @@ export const lywFont = ({
   fontStyle = {},
 }) => {
   const {
-    fontSize = 24
+    fontSize = DEFAULT_FONT_SIZE,
+    lineHeight = fontSize * 1.5,
   } = fontStyle;
   const svgProps = {
     width: fontSize,
-    height: fontSize * 1.5,
+    height: parseInt(lineHeight),
     version: '1.1',
     xmlns: 'http://www.w3.org/2000/svg',
     // viewBox: '0 -25 100 150',
-    viewBox: '0 0 100 100',
+    viewBox: '0 4 100 100',
   };
+  
+  let newFontStyle = { ...fontStyle };
+  delete newFontStyle.lineHeight;
+
+  const strokeStyle = Object.assign(defaultStrokeStyle, newFontStyle, {
+    fill: fontStyle.fill || '#333',
+    stroke: fontStyle.fill || '#333', // 往后可用于bold
+  });
+
   // 可进一步检查是不是龙彦code
   // let phthList = [];
   const tone = code[code.length - 1];
@@ -207,7 +218,7 @@ const parsePhthHeng = (code) => {
   let rafi = [
     []
   ]; // 里面先装一个篮子先
-  const vowelPatt = /[aieouëü]/;
+  const vowelPatt = /[aieou\u00eb\u00fc]/; // ë, ü
   const dcPatt = /ng|sh|ch|gh|zh|ts|dz|tz|kk|pp|tt|bh|dh|kh|rr/;
   // const dcEnds = ['g', 'h', 's', 'z'];
   let right = '';
@@ -241,10 +252,10 @@ const parsePhthHeng = (code) => {
       if (code[i - 1] && /[ue]/.test(code[i - 1])) {
         // log(88)
         curr = {
-          e: 'ë',
-          u: 'ü',
+          e: '\u00eb',
+          u: '\u00fc', 
         }[code[i - 1]];
-        log(code[i - 1], curr)
+        // log(code[i - 1], curr)
         basket.unshift(curr);
         right = curr;
         i -= 2;

@@ -1,22 +1,23 @@
 import React from 'react';
+import { Button } from 'antd';
 import { lywFont } from 'components/lyw-svg/index.jsx';
+import { DEFAULT_FONT_SIZE, klas, osIsWin } from 'components/_utils.js';
 
 import './index.less';
 
 class LywView extends React.Component {
   constructor(props) {
     super(props);
-    this.osIsWin = navigator.userAgent.indexOf('Windows') > -1;
-    this.cls = `lyw-view ${
-      props.className || ''
-      } ${
-      this.osIsWin ? 'is-win' : ''
-      }`;
-    // this.osIsWin && (cls += ' is-win');
+    this.cls = klas('lyw-view',
+      String(props.className || ''),
+      // { [props.className]: props.className },
+      {
+        'is-win': osIsWin,
+        'align-center': props.align === 'c',
+      });
     this.state = {
       fontStyle: Object.assign({
-        fontSize: 20,
-        color: '#333',
+        // fontSize: DEFAULT_FONT_SIZE,
       }, props.fontStyle),
     };
   }
@@ -24,6 +25,12 @@ class LywView extends React.Component {
     viewType: 'vertical', // 竖着一起展示
     langs: ['ss'],
     animType: 'fade',
+    fontStyle: {
+      fontSize: DEFAULT_FONT_SIZE,
+      // lineHeight: , // 最好别设
+      color: '#333', // NOTE: 这不是龙彦
+      fill: '#333', // NOTE: 这才是龙彦
+    },
   };
   /**
    * @struct PropType 
@@ -41,6 +48,9 @@ class LywView extends React.Component {
   _renderMulti = () => {
     const { dataSource, viewType, langs, animType } = this.props;
     const { fontStyle } = this.state;
+    if (!fontStyle.lineHeight && fontStyle.fontSize) {
+      fontStyle.lineHeight = fontStyle.fontSize * 1.5 + 'px';
+    }
     // if (['vertical', 'horizontal'].includes(viewType)) {
     return (
       <div className="lyw-multi">
@@ -55,7 +65,7 @@ class LywView extends React.Component {
                       lanContent = this.escXor(lanContent);
                     }
                     return (
-                      <pre 
+                      <pre
                         key={lKey}
                         className={`lyw-lang-${lang} lyw-lang-index-${lKey}`}
                         style={fontStyle}
@@ -154,3 +164,29 @@ class LywView extends React.Component {
 }
 
 export default LywView;
+
+const commonLywHover = {
+  viewType: "hover",
+  langs: ['ss', 'cn'],
+  animType: "fade",
+};
+
+export const LywHoverCn = props => <LywView {...commonLywHover} {...props} />;
+
+
+export const LywBtn = (props = {}) => {
+  const { btnProps = {} } = props;
+  const lywProps = {...props};
+  delete lywProps.btnProps;
+  lywProps.fontStyle = Object.assign({}, (props.fontStyle || {}), {
+    fill: ({
+      primary: '#fff',
+      danger: '#f5222d',
+    })[btnProps.type] || 'rgba(0, 0, 0, 0.65)',
+  });
+  return (
+    <Button {...btnProps}>
+      <LywHoverCn {...lywProps} />
+    </Button>
+  );
+}
