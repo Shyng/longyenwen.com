@@ -1,3 +1,4 @@
+@import '~components/_vars.less';
 .editor-nav {
     -webkit-display: flex;
     display: flex;
@@ -53,24 +54,46 @@
     }
 }
 
-.saving-menu {
-    width: 480px;
-    h3 {
-        margin-bottom: 16px;
-    }
-    .saving-item {
-        overflow: hidden;
-        >div {
-            display: inline-block;
+.ant-popover-inner-content {
+    padding: 8px 0;
+    .saving-menu {
+        width: 480px;
+        h3 {
+            margin-bottom: 16px;
         }
-        .saving-item-operating {
-            width: 180px;
-            float: right;
-        }
-        .saving-item-operating {
-            .ant-btn {
-                // width: 120px;
-                padding: 0 8px;
+        .saving-item {
+            overflow: hidden;
+            height: 36px;
+            // line-height: 36px;
+            padding: 0 16px;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            border-bottom: @borderGray;
+            border-top: 1px solid transparent;
+            &:first-child {
+                border-top: @borderGray;
+            }
+            &:hover {
+                background: @hoverBg;
+            }
+            .saving-item-index {
+                width: 32px;
+            }
+            .saving-item-title {
+                width: 366px;
+            }
+            .saving-item-operating {
+                width: 180px;
+                float: right;
+                text-align: right;
+            }
+            .saving-item-operating {
+                .ant-btn {
+                    // width: 120px;
+                    margin-right: 8px;
+                    padding: 0 4px;
+                }
             }
         }
     }

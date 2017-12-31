@@ -1,3 +1,14 @@
+.view-type-hover() {
+    .view-type-hover {
+        .lyw-lang-index-0 {
+            opacity: 0;
+        }
+        .lyw-lang-index-1 {
+            opacity: 1;
+        }
+    }
+}
+
 .lyw-view {
     .lyw-multi {
         display: inline-block;
@@ -22,6 +33,9 @@
             }
         }
     }
+    &:hover {
+        .view-type-hover();
+    }
     /* 特殊位置 */
     &.align-center .anim-type-fade {
         text-align: center;
@@ -33,17 +47,9 @@
     }
 }
 
-
-/* 很高明吧 */
+/* 扩大hover范围 */
 button:hover .lyw-view {
-    .view-type-hover {
-        .lyw-lang-index-0 {
-            opacity: 0;
-        }
-        .lyw-lang-index-1 {
-            opacity: 1;
-        }
-    }
+    .view-type-hover();
 }
 
 .is-win {

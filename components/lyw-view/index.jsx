@@ -23,7 +23,7 @@ class LywView extends React.Component {
   }
   static defaultProps = {
     viewType: 'vertical', // 竖着一起展示
-    langs: ['ss'],
+    langs: ['ss', 'cn'],
     animType: 'fade',
     fontStyle: {
       fontSize: DEFAULT_FONT_SIZE,
@@ -37,11 +37,15 @@ class LywView extends React.Component {
    * - viewType: oneOf(['vertical', 'horizontal', 'hover'(<=2), 'click'])
    */
   render() {
-    // const { fontStyle } = this.props;
+    const { dataSource, fontStyle } = this.props;
     // console.log(viewType, langs);
     return (
       <div className={this.cls}>
-        {this._renderMulti()}
+        {
+          typeof dataSource === 'string' /* NOTE single模式 */
+          ? <pre className="lyw-single" style={fontStyle}>{this.escXor(dataSource)}</pre>
+          : this._renderMulti()
+        }
       </div>
     );
   }
@@ -57,23 +61,24 @@ class LywView extends React.Component {
         {
           dataSource.map((p, key) => {
             return (
-              <div className={`lyw-paragraph view-type-${viewType} anim-type-${animType}`} key={key}>
-                {
-                  langs.map((lang, lKey) => {
-                    let lanContent = p[lang];
-                    if (lang === 'ss') {
-                      lanContent = this.escXor(lanContent);
-                    }
-                    return (
-                      <pre
-                        key={lKey}
-                        className={`lyw-lang-${lang} lyw-lang-index-${lKey}`}
-                        style={fontStyle}
-                      >{lanContent}</pre>
-                    );
-                  })
-                }
-              </div>
+              <div
+                className={`lyw-paragraph view-type-${viewType} anim-type-${animType}`}
+                key={key}
+              >{
+                langs.map((lang, lKey) => {
+                  let lanContent = p[lang];
+                  if (lang === 'ss') {
+                    lanContent = this.escXor(lanContent);
+                  }
+                  return (
+                    <pre
+                      key={lKey}
+                      className={`lyw-lang-${lang} lyw-lang-index-${lKey}`}
+                      style={fontStyle}
+                    >{lanContent}</pre>
+                  );
+                })
+              }</div>
             );
           })
         }
@@ -82,23 +87,11 @@ class LywView extends React.Component {
     // }
     // return this._renderMulti();
   }
-  // _renderMulti = () => {
-  //   const { dataSource, viewType, langs, animType } = this.props;
-  //   if (viewType === 'all'){
-
-  //   }
-  // }
   /**
    * @return {[type]}   [description]
    */
   escXor = (str) => {
     // test:
-    // str = "target";
-    // str = 'bayandur5 gulyander5 nayzuri5 osymatan5 banlangen5';
-    // str = 'cheistrusharing5 harPu5 mitsaRf5';
-    // str = '`p5` 12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 \\` l0 `转\\`义zhuan3` AND hai2有 `zai4转义`。学 d0 \\` fei1chang2 快！';
-    // str = '12km 可pa4。mei3天 dou1 有 javaskript5。mei2有 {转zhuan3义} l0。AND hai2有 {{转zhuan3yi4转}} dou1 有！'
-    // str = 'zhe2she4 te2shu1 魔法    地方 ta3，号。{zhuan3yi4 转yi4} 大幅度 mo4。';
     // end test
     const len = str.length;
     const patt = /\{[^\}]+?\}/;
@@ -173,11 +166,10 @@ const commonLywHover = {
 
 export const LywHoverCn = props => <LywView {...commonLywHover} {...props} />;
 
-
 export const LywBtn = (props = {}) => {
-  const { btnProps = {} } = props;
-  const lywProps = {...props};
-  delete lywProps.btnProps;
+  const { btnProps = {}, ...lywProps } = props;
+  // const lywProps = {...props};
+  // delete lywProps.btnProps;
   lywProps.fontStyle = Object.assign({}, (props.fontStyle || {}), {
     fill: ({
       primary: '#fff',
