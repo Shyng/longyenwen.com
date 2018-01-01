@@ -1,0 +1,56 @@
+.theme-cold {
+    @viewBg: #93b8cb;
+    @editorBg: #174458;
+    @editorColor: #e6c8a6;
+    @navBg: #c28d51;
+    .editor-nav {
+        background: @navBg; // color: #174458;
+    }
+    .lyw-view.lyw-col {
+        background: @viewBg; // color: #174458;
+    }
+    .lyw-editor {
+        background: @editorBg;
+        color: @editorColor;
+    }
+}
+
+.theme-cold-back {
+    @viewBg: #174458;
+    @editorBg: #93b8cb;
+    @viewColor: #e6c8a6;
+    @navBg: #c28d51;
+    .editor-nav {
+        background: @navBg;
+    }
+    .lyw-view.lyw-col {
+        background: @viewBg;
+        color: @viewColor;
+    }
+    .lyw-editor {
+        background: @editorBg;
+    }
+}
+
+.setting-item {
+    .ant-radio-button-wrapper {
+        .theme-item {
+            &.cold {
+                >div:first-child {
+                    background: #93b8cb;
+                }
+                >div:last-child {
+                    background: #174458;
+                }
+            }
+            &.coldBack {
+                >div:first-child {
+                    background: #174458;
+                }
+                >div:last-child {
+                    background: #93b8cb;
+                }
+            }
+        }
+    }
+}

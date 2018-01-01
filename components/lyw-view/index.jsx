@@ -14,6 +14,7 @@ class LywView extends React.Component {
       {
         'is-win': osIsWin,
         'align-center': props.align === 'c',
+        'single': typeof props.dataSource === 'string',
       });
     this.state = {
       fontStyle: Object.assign({
@@ -32,6 +33,11 @@ class LywView extends React.Component {
       fill: '#333', // NOTE: 这才是龙彦
     },
   };
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(nextProps.fontStyle) !== JSON.stringify(this.props.fontStyle)) {
+      this.setState({ fontStyle: nextProps.fontStyle });
+    }
+  }
   /**
    * @struct PropType 
    * - viewType: oneOf(['vertical', 'horizontal', 'hover'(<=2), 'click'])
@@ -43,7 +49,7 @@ class LywView extends React.Component {
       <div className={this.cls}>
         {
           typeof dataSource === 'string' /* NOTE single模式 */
-          ? <pre className="lyw-single" style={fontStyle}>{this.escXor(dataSource)}</pre>
+          ? <pre style={fontStyle}>{this.escXor(dataSource)}</pre>
           : this._renderMulti()
         }
       </div>
