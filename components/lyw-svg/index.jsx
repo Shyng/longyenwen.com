@@ -1,9 +1,7 @@
 import React from 'react';
 import fontHei from './font-hei.jsx';
 import { DEFAULT_FONT_SIZE } from 'components/_utils.js';
-// window.test = fontHei;
-// log(fontHei('j12'));
-// const ffff = 'ffff';
+
 export default {
   lywFont,
 };
@@ -32,7 +30,7 @@ export const lywFont = ({
     version: '1.1',
     xmlns: 'http://www.w3.org/2000/svg',
     // viewBox: '0 -25 100 150',
-    viewBox: '0 4 100 100',
+    viewBox: '0 12 100 100',
   };
   
   let newFontStyle = { ...fontStyle };
@@ -47,23 +45,20 @@ export const lywFont = ({
   // let phthList = [];
   const tone = code[code.length - 1];
   const HENG = tone === '5';
-  // log('bbb',code)
   // code.
   if (HENG) {
     const HENG_W = 55;
     // 还要断音节，防止过长
     let syllList = parsePhthHeng(code.slice(0, code.length - 1));
-    // log('sLIst: ', JSON.stringify(syllList));
     // return syllList.join('|');
     return (
       <span key={key}>
         {
           syllList.map((syll, svgKey) => {
-            svgProps.viewBox = `10 -20 ${HENG_W * syll.length} 100`;
+            svgProps.viewBox = `10 -0 ${HENG_W * syll.length} 100`;
             svgProps.width = fontSize / 2 * syll.length;
-            // log(syll);
             return (
-              <svg {...svgProps} key={svgKey} style={{ verticalAlign: 'top' }}>
+              <svg {...svgProps} key={svgKey}>
                 {
                   syll.map((phth, gKey) => (
                     <g key={gKey} transform={`translate(${HENG_W * gKey} 0)`}>
@@ -83,12 +78,12 @@ export const lywFont = ({
     );
   } else {
     if (tone === '0') {
-      svgProps.viewBox = '0 -15 100 100';
+      svgProps.viewBox = '0 -0 100 100';
     }
     let phthList = parsePhth(code);
     // console.log(phthList);
     return (
-      <svg {...svgProps} key={key} style={{ verticalAlign: 'top' }}>
+      <svg {...svgProps} key={key}>
         {
           phthList.map((phth, gKey) => {
             return (
@@ -203,8 +198,8 @@ const parsePhth = (code) => {
   // console.log('after', phthList);
   if (+tone) {
     phthList.push('$' + tone);
-  } else {
-    console.log('heng')
+  // } else {
+  //   console.log('heng')
   }
 
   return phthList;
@@ -227,12 +222,9 @@ const parsePhthHeng = (code) => {
   const LEN = code.length;
   let i = LEN - 1;
   let n = 0;
-  // log('code =', code)
   // let j = 0;
   for (; i >= 0;) {
-    // log(i)
     let curr = code[i];
-    // log('rafi per step: ', JSON.stringify(rafi));
     let basket = rafi[0]; // 篮子
     /**
     * @struct 条件判断的层次
@@ -247,15 +239,12 @@ const parsePhthHeng = (code) => {
       basket.unshift(curr);
       right = curr;
       i--;
-      // log('===v')
     } else if (curr === '\'') {
       if (code[i - 1] && /[ue]/.test(code[i - 1])) {
-        // log(88)
         curr = {
           e: '\u00eb',
           u: '\u00fc', 
         }[code[i - 1]];
-        // log(code[i - 1], curr)
         basket.unshift(curr);
         right = curr;
         i -= 2;
@@ -270,7 +259,6 @@ const parsePhthHeng = (code) => {
         basket.unshift(curr);
         right = curr; // 1个还是2个？
         i -= 2;
-        // log('===cc')
       } else if (
         curr === 'r' &&
         code[i - 1] && vowelPatt.test(code[i - 1]) &&
@@ -283,17 +271,14 @@ const parsePhthHeng = (code) => {
         basket.unshift(curr);
         right = curr;
         i--;
-        // log('===c')
       }
     }
     if (++n > 999) {
       break;
     }
   }
-  // log('after for: ', JSON.stringify(rafi));
   if (rafi.length > 1 && !vowelPatt.test(rafi[0].join(''))) {
     rafi.splice(0, 2, [...rafi[0], ...rafi[1]]);
   }
-  log('in rafi: ', JSON.stringify(rafi));
   return rafi;
 }

@@ -6,30 +6,15 @@ import './index.less';
 import LywView from 'components/lyw-view/index.jsx';
 import LywNav from './lyw-nav/index.jsx';
 
+import { defaultEditorValue } from './consts.js';
 import Theme from './theme/theme.js'; // 主题要配置2个地方，一个是less，一个是js
-
-const defaultValue = `欢迎 使用 龙彦文 编辑器。
-右边 shi4 编辑 区域，左边 neng2 根据 编辑区 内容， 实时 显示 对应d0 龙彦文。如 在 右边 输入 {ni3hao3}，jiu4neng2 在 左侧 看dao4 “你好” 一词 d0 龙彦文 写法。
----
-
-我相信你一定看得懂上面那段话，但不一定知道什么是龙彦文。龙彦文字，是一种中文改进方案。本方案保留汉字在书面语中的地位，只是将口语词和外来词替换为更容易书写的龙彦文。龙彦文全部由27个字母和4个音调符号拼接而成，不但易学易用、整洁美观，还能更准确地转译读音，方便引用外语词汇：
-
-- hai5 亲爱d0 keit5！gei3 wo3 lai2 一杯 kafi5。
-- shi4 二gou3zi0 a0，hao3久不见。yao4 杯 late5 hai2shi4 kapucino5？
-
-- 嗨，亲爱的Kate！给我来一杯咖啡。
-- 是二狗子啊，好久不见！要杯拿铁还是卡布奇诺？
-
-关于龙彦文的更多信息，不久后将会在本网站发布。
-【备注】以5结尾的单词会被转译为外来词；{}内的内容不会被转译`;
-
 
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: defaultValue,
-      viewData: this.produceViewData(defaultValue),
+      value: defaultEditorValue,
+      viewData: this.produceViewData(defaultEditorValue),
       savingData: JSON.parse(localStorage.getItem('editorStorage')) || new Array(10).fill({}),
       settings: JSON.parse(localStorage.getItem('editorSettings')) || {
         fontSize: 18,

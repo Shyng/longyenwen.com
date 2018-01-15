@@ -15,10 +15,14 @@
         word-wrap: break-word;
         min-height: 1.5em;
         min-width: 1px;
+        font-family: Menlo, Courier, monospace; // Consolas有lineheight问题
+        svg {
+            vertical-align: middle;
+        }
     }
     &.single {
         display: inline-block;
-        vertical-align: top;
+        // vertical-align: top;
     }
     .lyw-multi {
         display: inline-block;
@@ -26,7 +30,7 @@
             cursor: default;
             position: relative;
             pre {
-                font-family: Menlo, Courier, monospace; // Consolas有lineheight问题
+                
                 width: 100%;
                 transition: all .4s; // 默认fade
                 -webkit-transition: all .4s;
@@ -60,6 +64,6 @@ button:hover .lyw-view {
 
 .is-win {
     pre {
-        font-family: SimHei;
+        font-family: SimHei !important;
     }
 }

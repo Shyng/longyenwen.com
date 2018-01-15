@@ -1,0 +1,53 @@
+@import "~components/common.less";
+body {}
+
+.md-editor-app {
+    width: 100%;
+    height: 100%;
+    .md-editor,
+    .md-view {
+        width: 50%;
+        height: 100%;
+        overflow: auto;
+    }
+    .md-editor {
+        float: right;
+        background: #174458;
+        color: #e6c8a6;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        >[contenteditable] {
+            height: 100%;
+            padding: 16px;
+            overflow: auto; // -webkit-user-modify: read-write-plaintext-only; // 还不如直接用textarea
+            .indent-1 {
+                padding-left: 2em;
+            }
+            .indent-2 {
+                padding-left: 4em;
+            }
+            .indent-3 {
+                padding-left: 6em;
+            }
+            .indent-4 {
+                padding-left: 8em;
+            }
+            .indent-5 {
+                padding-left: 10em;
+            }
+            .indent-6 {
+                padding-left: 12em;
+            }
+            // [data-indent=1] { padding-left: 2em; }
+            // [data-indent=2] { padding-left: 4em; }
+            // [data-indent=3] { padding-left: 6em; }
+            // [data-indent=4] { padding-left: 8em; }
+            // [data-indent=5] { padding-left: 10em; }
+            // [data-indent=6] { padding-left: 12em; }
+        }
+    }
+    .md-view {
+        float: left;
+        padding: 16px;
+    }
+}
