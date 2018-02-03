@@ -6,6 +6,8 @@ import { html2txt } from 'components/_utils.js';
 
 import './index.less';
 
+const ulPatt = /^[\-\*]\s/;
+
 class MdEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -23,8 +25,26 @@ class MdEditor extends React.Component {
     // }
     if (!value && !value.length) {
       value = this.initInnerHTML;
+      this.setState({ innerHTML: value });
     }
-    this.setState({ innerHTML: value });
+    /* 列表监听变化 */
+    const $prg = this.getSelectedParagraph$();
+    const prgText = $prg.text();
+    // console.log(prgText)
+    if (!$prg.hasClass('md-ul') && ulPatt.test(prgText)) {
+      // console.log($prg)
+      $prg.addClass('md-ul');
+    } else if ($prg.hasClass('md-ul') && !ulPatt.test(prgText)) {
+      $prg.removeClass('md-ul');
+    }
+    
+    // console.log();
+    /* 
+      NOTE 会和DOM操作冲突，只能在特定时候改；
+      NOTE 且会重置selection
+    */
+    // this.setState({ innerHTML: value }); // 
+    
   }
   onFocus = (e) => { // 失败
     if (this.state.innerHTML === this.initInnerHTML) { // 第一次
@@ -49,36 +69,56 @@ class MdEditor extends React.Component {
     document.execCommand("insertText", false, pastedData);
   }
   onKeyDown = (e) => {
-    // console.log(e.keyCode);
+    // console.log(e.metaKey);
     switch (e.keyCode){
       case 9:
         e.preventDefault();
-        let sel = window.getSelection();
+        // let sel = window.getSelection();
         // console.log(sel);
-        if (sel.type === "Caret" && sel.focusOffset === 0) {
-          document.execCommand("insertText", false, '    ');
-        } else {
+        // if (sel.type === "Caret" && sel.focusOffset === 0) {
+        //   document.execCommand("insertText", false, '    ');
+        // } else {
+          this.changeIndent(1);
+        // }
+        break;
+      case 219:
+        if (e.metaKey) {
+          e.preventDefault();
+          this.changeIndent(-1);
+        }
+        break;
+      case 221:
+        if (e.metaKey) {
+          e.preventDefault();
           this.changeIndent(1);
         }
         break;
-      case 219:
-        e.preventDefault();
-        this.changeIndent(-1);
-        break;
-      case 221:
-        e.preventDefault();
-        this.changeIndent(1);
+      case 13:
+        let $prevPrg = this.getSelectedParagraph$();
+        if (ulPatt.test($prevPrg.text())) {
+          setTimeout(() => {
+            let $prg = this.getSelectedParagraph$();
+            let prevText = $prg.text();
+            $prg.text('- ' + prevText);
+            // console.log($prg.text())
+          }, 0);
+        }
+        
         break;
       default:
         // e.preventDefault();
         // console.log(e.keyCode);
     }
   }
-  changeIndent = (change = 1) => {
+  getSelectedParagraph$ = (cls = 'md-paragraph') => {
     const sel = window.getSelection();
     const $currElem = $(sel.anchorNode.parentElement);
-    const $paragraph = $currElem.hasClass('md-paragraph') ?
-      $currElem : $currElem.parents('.md-paragraph');
+    const $paragraph = $currElem.hasClass(cls) ?
+      $currElem : $currElem.parents(`.${cls}`);
+    return $paragraph;
+  }
+  changeIndent = (change = 1) => {
+    const $paragraph = this.getSelectedParagraph$();
     const clsList = $paragraph[0].classList;
     let indentCls = 'indent-0', indent = 0;
     for (let i = 0; i < clsList.length; i++) {

@@ -1,0 +1,49 @@
+@import "~components/common.less";
+.tsy-select {
+    width: 200px;
+}
+
+.songtsy-page {
+    padding: 20px;
+    width: 900px;
+    margin: auto; // position: 
+    .songtsy-header {
+        position: relative;
+        .songtsy-title {
+            font-family: 'SimKai';
+            margin-bottom: 12px;
+            font-size: 32px;
+        }
+        .songtsy-subtitle {
+            font-family: 'SimKai';
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .songtsy-setting {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 12px;
+            .font-size-setting {
+                width: 60px;
+            }
+        }
+    }
+    .songtsy-body {
+        clear: both;
+        margin: 12px 0;
+        .tsy {
+            .tsy-body {
+                min-height: 120px;
+                border: 1px solid #ccc;
+                padding: 12px;
+                margin: 12px 0;
+                .tsy-title {
+                    font-size: 18px;
+                    margin-bottom: 8px;
+                }
+                .tsy-content {}
+            }
+        }
+    }
+}
