@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { lywFont } from 'components/lyw-svg/index.jsx';
 import { DEFAULT_FONT_SIZE, klas, osIsWin } from 'components/_utils.js';
+import { sensianize } from './consts.js';
 
 import './index.less';
 
@@ -134,7 +135,7 @@ class LywView extends React.Component {
     let curr;
     const pushInForm = (startI, index, code) => {
       // index && console.log('in Form', str.slice(startI, startI + index));
-      index && result.push(str.slice(startI, startI + index));
+      index && result.push(sensianize(str.slice(startI, startI + index)));
       code && result.push(lywFont({
         code,
         key: startI,

@@ -120,25 +120,29 @@ const parsePhth = (code) => {
   //转u为v
   code = code.replace(/(yu)|ü/, "v");
   code = code.replace(/([jqx])u/, "$1v");
+
+
+  //转结尾的ie, ve为iE, vE
+  code = code.replace(/([ivy])e$/, "$1E");
+  //转lue, nue
+  code = code.replace(/^([nl])ue$/, "$1vE");
+  //转ian, yan
+  code = code.replace(/([iy])an$/, "$1En");
+  //转ei为Ei
+  code = code.replace(/e(?=i)/, "E");
+
   //转结尾的uo为o，新增171215
   code = code.replace(/uo$/, "o");
   //转结尾的un为uen
   code = code.replace(/un$/, "uen");
-  //转结尾的ie, ve为iE, vE
-  code = code.replace(/([ivy])e$/, "$1E");
-  //转ei为Ei
-  code = code.replace(/e(?=i)/, "E");
   //转结尾的ui, iu为uei, iou
   code = code.replace(/ui$/, "uEi");
   code = code.replace(/iu$/, "iou");
+
   //转zh, ch, sh, 全部！！！
   code = code.replace(/zh/, "j");
   code = code.replace(/ch/, "q");
   code = code.replace(/sh/, "x");
-  //转ian, yan
-  code = code.replace(/([iy])an$/, "$1En");
-  //转lue, nue
-  code = code.replace(/^([nl])ue$/, "$1vE");
 
   /*拆分部件*/
   let reg;

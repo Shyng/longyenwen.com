@@ -1,4 +1,4 @@
-export const defaultEditorValue = `欢迎 使用 龙彦文 编辑器。
+export const _defaultEditorValue = `欢迎 使用 龙彦文 编辑器。
 右边 shi4 编辑 区域，左边 neng2 根据 编辑区 内容， 实时 显示 对应d0 龙彦文。如 在 右边 输入 {ni3hao3}，jiu4neng2 在 左侧 看dao4 “你好” 一词 d0 龙彦文 写法。
 ---
 
@@ -12,3 +12,5 @@ export const defaultEditorValue = `欢迎 使用 龙彦文 编辑器。
 
 关于龙彦文的更多信息，不久后将会在本网站发布。
 【备注】以5结尾的单词会被转译为外来词；{}内的内容不会被转译`;
+
+export const defaultEditorValue = `汉文 时代，jiu4neng2 在 左侧 看dao4 “你好” 一词 d0 龙彦文 写法。`;
