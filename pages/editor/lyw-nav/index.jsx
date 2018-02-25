@@ -1,11 +1,13 @@
 import React from 'react';
-import { Icon, Modal, Popover, Input, Button, Radio, message } from 'antd';
+import { Icon, Modal, Popover, Input, Button, Radio, message, Tooltip } from 'antd';
 import LywView, { LywHoverCn, LywBtn } from 'components/lyw-view/index.jsx';
 import MiniLywEditor from 'components/mini-lyw-editor/index.jsx';
 import './index.less';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+
+const { songtsyUrl } = window.PAGE_CONFIG || {};
 
 class LywNav extends React.Component {
   // constructor(props) {
@@ -19,7 +21,13 @@ class LywNav extends React.Component {
     return (
       <div className="editor-nav">
         <div className="editor-nav-side">
-          <Icon type="home" />
+          {/* <Icon type="home" /> */}
+          <Tooltip placement="bottom" title="龙彦文 认读 训练">
+            <span
+              className="iconfont iconfont-reading"
+              onClick={() => { window.open(songtsyUrl) }}
+            />
+          </Tooltip>
         </div>
         <LywHoverCn
           className="editor-nav-title"

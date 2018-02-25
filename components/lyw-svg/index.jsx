@@ -137,6 +137,8 @@ const parsePhth = (code) => {
   code = code.replace(/sh/, "x");
   //转ian, yan
   code = code.replace(/([iy])an$/, "$1En");
+  //转lue, nue
+  code = code.replace(/^([nl])ue$/, "$1vE");
 
   /*拆分部件*/
   let reg;
