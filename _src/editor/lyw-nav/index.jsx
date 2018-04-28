@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, Modal, Popover, Input, Button, Radio, message, Tooltip } from 'antd';
 import LywView, { LywHoverCn, LywBtn } from 'components/lyw-view/index.jsx';
 import MiniLywEditor from 'components/mini-lyw-editor/index.jsx';
+import Alphabet from 'components/alphabet/index.jsx';
 import './index.less';
 
 const RadioButton = Radio.Button;
@@ -10,18 +11,19 @@ const RadioGroup = Radio.Group;
 const { songtsyUrl } = window.PAGE_CONFIG || {};
 
 class LywNav extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   // this.state = {
-  //   //   newTitle: '',
-  //   // };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      tutorialVisible: false,
+    };
+  }
   render() {
     // console.log(this.state);
     return (
       <div className="editor-nav">
         <div className="editor-nav-side">
           {/* <Icon type="home" /> */}
+          <Icon type="question-circle" onClick={this.showTutorial} />
           <Tooltip placement="bottom" title="龙彦文 认读 训练">
             <span
               className="iconfont iconfont-reading"
@@ -55,6 +57,23 @@ class LywNav extends React.Component {
         </div>
       </div>
     );
+  }
+  showTutorial = () => {
+    return (
+      <div className={`tutorial-pane ${
+        this.state.tutorialVisible ? 'visible' : 'hidden'
+      }`}>
+        <Alphabet />
+      </div>
+    );
+    // Modal.info({
+    //   title: '龙彦文 简单 教程',
+    //   content: <Alphabet />,
+    //   iconType: null,
+    //   width: 1200,
+    //   okText: '已 知晓',
+    //   className: 'alphabet-dialog',
+    // });
   }
   _settingMenu = () => {
     const { settingCb, settings } = this.props;
@@ -151,6 +170,9 @@ class LywNav extends React.Component {
         </div>
       </li>
     );
+  }
+  _tutorial = () => {
+
   }
   onRewrite = (index) => {
     // console.log(this.state);

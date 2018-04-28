@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { lywFont } from 'components/lyw-svg/index.jsx';
+import EmergePane from 'components/emerge-pane/index.jsx';
 import { DEFAULT_FONT_SIZE, klas, osIsWin } from 'components/_utils.js';
 import { sensianize } from './consts.js';
 
