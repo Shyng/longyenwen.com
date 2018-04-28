@@ -20,6 +20,7 @@ export const lywFont = ({
   key,
   fontStyle = {},
 }) => {
+  // console.log(code)
   const {
     fontSize = DEFAULT_FONT_SIZE,
     lineHeight = fontSize * 1.5,
@@ -41,9 +42,35 @@ export const lywFont = ({
     stroke: fontStyle.fill || '#333', // 往后可用于bold
   });
 
+  // 浊音单独输出：
+  if (code === 'v\'v5') {
+    return (
+      <svg {...svgProps} key={ key }>
+        { 
+          fontHei('$$').map(
+            (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
+          )
+        } 
+      </svg>
+    );
+  }
+
   // 可进一步检查是不是龙彦code
   // let phthList = [];
   const tone = code[code.length - 1];
+  // // 音调单独输出
+  // if (/tone[1-5]/.test(code)) {
+  //   return (
+  //     <svg {...svgProps} key={ key }>
+  //       { 
+  //         fontHei('$' + tone).map(
+  //           (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
+  //         )
+  //       } 
+  //     </svg>
+  //   );
+  // }
+
   const HENG = tone === '5';
   // code.
   if (HENG) {

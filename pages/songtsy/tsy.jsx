@@ -5,6 +5,7 @@ import LywView from 'components/lyw-view/index.jsx';
 import { tsyphaiList, koelvList, syllableList } from './origin-tsy-list.js';
 
 const { Option } = Select;
+const syllableListLength = syllableList.length; 
 
 export default class Tsy extends React.Component {
   constructor(props) {
@@ -23,7 +24,8 @@ export default class Tsy extends React.Component {
     let tsy = [];
     for (let i = 0; i < koelv.length; i++) {
       // const element = array[i];
-      const syll = syllableList[~~(Math.random() * 413)];
+      const syll = syllableList[~~(Math.random() * syllableListLength)];
+      // console.log(syll)
       switch (koelv[i]) {
         case '○':
         case '△':

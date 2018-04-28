@@ -390,8 +390,8 @@ export default (phth) => {
       'm64.521485,74.492021l4.7,4.73c-10.48,8.9 -19.87,12.1 -34.9,15.05l-2.05,-6.2c17.8,-3.09 24.95,-8.49 32.25,-13.58z',
       'm42.321485,74.242021l-4.1,5.93c10.73,7.33 25.82,11.42 37.15,13.95l1.15,-7.35c-10.48,-1.84 -23.67,-5.74 -34.2,-12.53z'
     ],
-    _t: [UN], // 测试用的吧
-    $$: [UN], // 浊音
+    // _t: [UN], // 测试用的吧
+    $: [UN], // 空置的，防止报错
   };
 
   const voicedSign = [ // 浊音符号
@@ -401,6 +401,7 @@ export default (phth) => {
   const hengOf = (phth, posi = '12') => ([...characterMap[`${phth}${posi}`]]);
   const voicedOf = (phth, posi = '12') => ([...hengOf(phth, posi), ...voicedSign]);
   let hengMap = {
+    $$: voicedOf('$', ''), // 单纯的浊音符号
     i: hengOf('y'),
     u: hengOf('w'),
     y: voicedOf('y'),
@@ -429,7 +430,7 @@ export default (phth) => {
   };
   // 其余横彦字母以12为基准，没有的补上
   characterMap = Object.assign({}, characterMap, hengMap);
-  // console.log(characterMap[phth]);
+  // console.log(phth);
   return characterMap[phth] || characterMap[phth + '12'] || [UN];
 };
 
