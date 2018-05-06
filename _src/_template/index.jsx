@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 // import {Input, Button} from 'antd';
+// import { klas } from 'components/_utils.js';
 
 import './index.less';
 

@@ -1,0 +1,201 @@
+.ly-tutorial-page {
+  .alphabet .body, .ly-square, .ly-rules {
+    // &::-webkit-scrollbar {
+
+    // }
+    /* Let's get this party started */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      // -webkit-border-radius: 10px;
+      // border-radius: 10px;
+      background: lightgray;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      // -webkit-border-radius: 10px;
+      // border-radius: 10px;
+      background: steelblue;
+      // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+  }
+  .ly-square {
+    overflow: auto;
+    // height: 100%;
+    padding-bottom: 20px;
+  }
+  .square-item {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 80px;
+    margin-bottom: 80px;
+    .title {
+      font-size: 20px;
+      font-family: SimHei;
+    }
+    .desc {
+      font-size: 14px; // margin-top: 4px;
+      // font-style: italic;
+      color: #999;
+    }
+    .title,
+    .desc {
+      height: 1.5em;
+    }
+    .pinyin {
+      font-size: 48px;
+      margin-top: -20px;
+      color: steelblue;
+    }
+    .b,
+    .l,
+    .r,
+    .tl,
+    .bl,
+    .tr,
+    .br {
+      position: absolute;
+      color: steelblue;
+      font-size: 16px;
+      width: 3em;
+      &::after {
+        position: absolute;
+        content: '';
+        border: 1px dashed steelblue;
+      }
+    }
+    .r,
+    .tr,
+    .br,
+    .b {
+      right: 0px;
+    }
+    .tl,
+    .tr {
+      top: 66px;
+    }
+    .l,
+    .r {
+      top: 111px;
+    }
+    .bl,
+    .br {
+      top: 144px;
+    }
+    .b {
+      top: 188px;
+      &::after {
+        width: 50px;
+        left: -60px;
+        transform: rotate(15deg);
+      }
+    }
+    .tl {
+      &::after {
+        width: 44px;
+        right: -44px;
+        top: 22px;
+        transform: rotate(12deg);
+      }
+    }
+    .l {
+      &::after {
+        width: 55px;
+        right: -55px;
+        top: 11px;
+      }
+    }
+    .bl {
+      &::after {
+        width: 44px;
+        right: -44px;
+        top: 8px;
+        transform: rotate(-8deg);
+      }
+    }
+    .tr {
+      &::after {
+        width: 55px;
+        left: -44px;
+        top: 22px;
+        transform: rotate(-12deg);
+      }
+    }
+    .r {
+      &::after {
+        width: 55px;
+        left: -44px;
+        top: 11px;
+      }
+    }
+    .br {
+      &::after {
+        width: 55px;
+        left: -44px;
+        top: 4px;
+        transform: rotate(12deg);
+      }
+    }
+  }
+  .hengyen {
+    font-size: 16px;
+    padding-left: 15%;
+    h3 {
+      margin-bottom: 12px;
+      font-size: 20px;
+      border-left: 3px solid #333;
+      padding-left: 12px;
+    }
+    .lyw-view {
+      height: 56px;
+    }
+    .pinyin {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+  }
+  .ly-rules {
+    overflow: auto;
+    tab-size: 2em;
+    ol {
+      display: block;
+      list-style-type: simp-chinese-informal;
+      -webkit-margin-before: 1em;
+      -webkit-margin-after: 1em;
+      -webkit-margin-start: 0px;
+      -webkit-margin-end: 0px;
+      -webkit-padding-start: 40px;
+      li {
+        // list-style-type: decimal;
+      }
+    }
+    .example-myth {
+      h3 {
+        margin-top: 20px;
+      }
+      h4 {
+        text-align: center;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      article {
+        max-width: 800px;
+        margin: auto;
+      }
+      .myth-chinese {
+        p {
+          text-indent: 2em;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+}

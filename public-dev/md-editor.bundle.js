@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "71fbd5cfd68608104424"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9d4bc1cbc611586d024e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -722,7 +722,7 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(964)(__webpack_require__.s = 964);
+/******/ 	return hotCreateRequire(972)(__webpack_require__.s = 972);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -734,9 +734,9 @@
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(112);
+  module.exports = __webpack_require__(114);
 } else {
-  module.exports = __webpack_require__(113);
+  module.exports = __webpack_require__(115);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
@@ -972,9 +972,9 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(170);
+  module.exports = __webpack_require__(172);
 } else {
-  module.exports = __webpack_require__(173);
+  module.exports = __webpack_require__(175);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
@@ -982,6 +982,52 @@ if (process.env.NODE_ENV === 'production') {
 /***/ }),
 
 /***/ 110:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.klas = klas;
+exports.html2txt = html2txt;
+var DEFAULT_FONT_SIZE = exports.DEFAULT_FONT_SIZE = parseInt(window.getComputedStyle(document.body).fontSize);
+
+function klas() {
+  var list = [];
+  var len = arguments.length;
+  for (var i = 0; i < len; i++) {
+    var c = arguments[i];
+    if (typeof arguments[i] === 'string') {
+      list.push(c);
+    } else {
+      for (var k in c) {
+        k && c[k] && list.push(k);
+      }
+    }
+  }
+  return list.join(' ');
+}
+
+var osIsWin = exports.osIsWin = navigator.userAgent.indexOf('Windows') > -1;
+
+function html2txt(html) {
+  html = html.replace(/<style([\s\S]*?)<\/style>/gi, '');
+  html = html.replace(/<script([\s\S]*?)<\/script>/gi, '');
+  html = html.replace(/<\/div>/ig, '\n');
+  html = html.replace(/<\/li>/ig, '\n');
+  html = html.replace(/<li>/ig, '  *  ');
+  html = html.replace(/<\/ul>/ig, '\n');
+  html = html.replace(/<\/p>/ig, '\n');
+  html = html.replace(/<br\s*[\/]?>/gi, "\n");
+  html = html.replace(/<[^>]+>/ig, '');
+  return html;
+}
+
+/***/ }),
+
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1018,7 +1064,7 @@ module.exports = hyphenate;
 
 /***/ }),
 
-/***/ 111:
+/***/ 112:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1054,7 +1100,7 @@ module.exports = camelize;
 
 /***/ }),
 
-/***/ 112:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1084,7 +1130,7 @@ module.exports=X["default"]?X["default"]:X;
 
 /***/ }),
 
-/***/ 113:
+/***/ 115:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2665,53 +2711,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 169:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.klas = klas;
-exports.html2txt = html2txt;
-var DEFAULT_FONT_SIZE = exports.DEFAULT_FONT_SIZE = parseInt(window.getComputedStyle(document.body).fontSize);
-
-function klas() {
-  var list = [];
-  var len = arguments.length;
-  for (var i = 0; i < len; i++) {
-    var c = arguments[i];
-    if (typeof arguments[i] === 'string') {
-      list.push(c);
-    } else {
-      for (var k in c) {
-        k && c[k] && list.push(k);
-      }
-    }
-  }
-  return list.join(' ');
-}
-
-var osIsWin = exports.osIsWin = navigator.userAgent.indexOf('Windows') > -1;
-
-function html2txt(html) {
-  html = html.replace(/<style([\s\S]*?)<\/style>/gi, '');
-  html = html.replace(/<script([\s\S]*?)<\/script>/gi, '');
-  html = html.replace(/<\/div>/ig, '\n');
-  html = html.replace(/<\/li>/ig, '\n');
-  html = html.replace(/<li>/ig, '  *  ');
-  html = html.replace(/<\/ul>/ig, '\n');
-  html = html.replace(/<\/p>/ig, '\n');
-  html = html.replace(/<br\s*[\/]?>/gi, "\n");
-  html = html.replace(/<[^>]+>/ig, '');
-  return html;
-}
-
-/***/ }),
-
-/***/ 170:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2964,7 +2964,7 @@ ReactDOMEventListener:Zd},unstable_createRoot:function(a,b){return new sg(a,!0,n
 
 /***/ }),
 
-/***/ 171:
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2979,7 +2979,7 @@ ReactDOMEventListener:Zd},unstable_createRoot:function(a,b){return new sg(a,!0,n
  * @typechecks
  */
 
-var isNode = __webpack_require__(172);
+var isNode = __webpack_require__(174);
 
 /**
  * @param {*} object The object to check.
@@ -2993,7 +2993,7 @@ module.exports = isTextNode;
 
 /***/ }),
 
-/***/ 172:
+/***/ 174:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3022,7 +3022,7 @@ module.exports = isNode;
 
 /***/ }),
 
-/***/ 173:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3054,8 +3054,8 @@ var getActiveElement = __webpack_require__(59);
 var shallowEqual = __webpack_require__(88);
 var containsNode = __webpack_require__(49);
 var emptyObject = __webpack_require__(37);
-var hyphenateStyleName = __webpack_require__(174);
-var camelizeStyleName = __webpack_require__(175);
+var hyphenateStyleName = __webpack_require__(176);
+var camelizeStyleName = __webpack_require__(177);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -19551,7 +19551,7 @@ module.exports = reactDom;
 
 /***/ }),
 
-/***/ 174:
+/***/ 176:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19566,7 +19566,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(110);
+var hyphenate = __webpack_require__(111);
 
 var msPattern = /^ms-/;
 
@@ -19594,7 +19594,7 @@ module.exports = hyphenateStyleName;
 
 /***/ }),
 
-/***/ 175:
+/***/ 177:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19609,7 +19609,7 @@ module.exports = hyphenateStyleName;
 
 
 
-var camelize = __webpack_require__(111);
+var camelize = __webpack_require__(112);
 
 var msPattern = /^-ms-/;
 
@@ -19791,7 +19791,7 @@ module.exports = warning;
  * 
  */
 
-var isTextNode = __webpack_require__(171);
+var isTextNode = __webpack_require__(173);
 
 /*eslint-disable no-bitwise */
 
@@ -20063,7 +20063,7 @@ module.exports = shallowEqual;
 
 /***/ }),
 
-/***/ 964:
+/***/ 972:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20079,13 +20079,13 @@ var _reactDom = __webpack_require__(11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactContenteditable = __webpack_require__(965);
+var _reactContenteditable = __webpack_require__(973);
 
 var _reactContenteditable2 = _interopRequireDefault(_reactContenteditable);
 
-var _utils = __webpack_require__(169);
+var _utils = __webpack_require__(110);
 
-__webpack_require__(966);
+__webpack_require__(974);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20280,7 +20280,7 @@ _reactDom2.default.render(_react2.default.createElement(MdEditor, null), documen
 
 /***/ }),
 
-/***/ 965:
+/***/ 973:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20397,7 +20397,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 966:
+/***/ 974:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

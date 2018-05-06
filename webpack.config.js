@@ -14,7 +14,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const now = new Date();
 const timeHash = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}-${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}`;
-
+// console.log(process.argv);
 /**
  *
  * @param {*} options webpack --env.aaa=2
@@ -23,7 +23,7 @@ module.exports = (options = {}) => {
   const apps = fs.readdirSync(__dirname + '/_src');
   var entry = {}, output = {},
     plugins = [new webpack.HotModuleReplacementPlugin()];
-  // console.log(hash);
+  // console.log(options);
   // return;
 
   apps.forEach((p) => {
@@ -40,22 +40,22 @@ module.exports = (options = {}) => {
         })
       );
     }
+    // console.log(timeHash);
     // build的情况，准备apps/的html文件，复制自_demos
     if (options.build) {
       var src = `${__dirname}/_demos/${p}.html`,
         dst = `${__dirname}/apps/${p}.html`;
       if (!fileExistsSync(dst) && fileExistsSync(src)) {
         console.log('===INFO=== apps/%s.html文件不存在，现在为您创建。修改后可直接应用到线上', p);
-
-        fs.readFile(src, (err, data) => {
-            var $ = cheerio.load(data.toString());
-            $(`script[src*=${p}]`).attr('src', `../public/${p}.${timeHash}.js`);
-            $(`link[href*=${p}]`).attr('href', `../public/${p}.${timeHash}.css`);
-            fs.writeFile(dst, $.html(), err => {
-              !err && console.log(`Set ${p} successfully with timeHash ${timeHash}`)
-            });
-        });
       }
+      fs.readFile(src, (err, data) => {
+          var $ = cheerio.load(data.toString());
+          $(`script[src*=${p}]`).attr('src', `../public/${p}.${timeHash}.js`);
+          $(`link[href*=${p}]`).attr('href', `../public/${p}.${timeHash}.css`);
+          fs.writeFile(dst, $.html(), err => {
+            !err && console.log(`Set ${p} successfully with timeHash ${timeHash}`)
+          });
+      });
     }
   });
 
@@ -66,18 +66,32 @@ module.exports = (options = {}) => {
       filename: `[name].${timeHash}.js`// 打包后输出文件的文件名
     };
     plugins.unshift(new Extracter(`[name].${timeHash}.css`));
-    !options.quick && plugins.push(new UglifyJSPlugin());
+    !process.argv.includes('quick') && plugins.push(new UglifyJSPlugin());
 
     // 删除旧文件
-    ((dir) => {
+    const emptyDir = (dir, isDev) => {
       if (fs.existsSync(dir)) {
-        console.log(dir);
+        console.log(`清理${dir}文件夹`);
         fs.readdirSync(dir).forEach((file) => {
-          console.log('===INFO=== 清空public文件夹后，生成带hash的新的js、css文件');
-          fs.unlinkSync(`${dir}/${file}`);
+          // console.log('===INFO=== 清空public文件夹后，生成带hash的新的js、css文件');
+          isDev
+          ? (/hot-update/.test(file) && fs.unlinkSync(`${dir}/${file}`))
+          : fs.unlinkSync(`${dir}/${file}`);
         });
       };
-    })(__dirname + '/public');
+    };
+    emptyDir(__dirname + '/public');
+    emptyDir(__dirname + '/public-dev', true);
+
+    // ((dir) => {
+    //   if (fs.existsSync(dir)) {
+    //     // console.log(dir);
+    //     fs.readdirSync(dir).forEach((file) => {
+    //       console.log('===INFO=== 清空public文件夹后，生成带hash的新的js、css文件');
+    //       fs.unlinkSync(`${dir}/${file}`);
+    //     });
+    //   };
+    // })(__dirname + '/public');
 
   } else {
     output = {

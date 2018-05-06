@@ -33,7 +33,7 @@ export const lywFont = ({
     // viewBox: '0 -25 100 150',
     viewBox: '0 12 100 100',
   };
-  
+
   let newFontStyle = { ...fontStyle };
   delete newFontStyle.lineHeight;
 
@@ -46,11 +46,11 @@ export const lywFont = ({
   if (code === 'v\'v5') {
     return (
       <svg {...svgProps} key={ key }>
-        { 
+        {
           fontHei('$$').map(
             (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
           )
-        } 
+        }
       </svg>
     );
   }
@@ -62,11 +62,11 @@ export const lywFont = ({
   // if (/tone[1-5]/.test(code)) {
   //   return (
   //     <svg {...svgProps} key={ key }>
-  //       { 
+  //       {
   //         fontHei('$' + tone).map(
   //           (d, dKey) => <path d={d} key={dKey} {...strokeStyle} />
   //         )
-  //       } 
+  //       }
   //     </svg>
   //   );
   // }
@@ -276,7 +276,7 @@ const parsePhthHeng = (code) => {
       if (code[i - 1] && /[ue]/.test(code[i - 1])) {
         curr = {
           e: '\u00eb',
-          u: '\u00fc', 
+          u: '\u00fc',
         }[code[i - 1]];
         basket.unshift(curr);
         right = curr;

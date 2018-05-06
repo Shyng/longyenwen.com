@@ -1,4 +1,4 @@
-@import url(//at.alicdn.com/t/font_563325_29pafanuthrdlsor.css);/*!
+@import url(//at.alicdn.com/t/font_416373_r923k0l3ln4p9zfr.css);/*!
  * antd v2.13.13
  * 
  * Copyright 2015-present, Alipay, Inc.
@@ -19196,6 +19196,12 @@ body .ant-modal-mask {
 body .ant-message {
   z-index: 1222;
 }
+body .ant-tooltip {
+  z-index: 1111;
+}
+.ant-tabs-nav .ant-tabs-tab {
+  height: auto;
+}
 .theme-cold .editor-nav {
   background: #c28d51;
 }
@@ -19245,7 +19251,10 @@ body .ant-message {
   padding: 16px;
   padding-top: 56px;
 }
-.lyw-editor-app .lyw-view {
+.lyw-editor-app > .lyw-col pre {
+  min-height: 1.5em;
+}
+.lyw-editor-app > .lyw-col .lyw-view {
   overflow: auto;
 }
 .lyw-editor-app .lyw-editor textarea,
@@ -19257,13 +19266,49 @@ body .ant-message {
   outline: none;
   resize: none;
 }
+.emerge-pane-page .alphabet .body {
+  height: calc(100% - 110px);
+}
+.emerge-pane-page .ly-square {
+  height: calc(100% - 60px);
+}
+.emerge-pane-page .ly-rules {
+  height: calc(100% - 60px);
+}
+.emerge-pane-page {
+  position: fixed;
+  z-index: 9999;
+  width: 100vw;
+  height: 96vh;
+  background: #fff;
+  top: 100vh;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0, 1.06, 0.26, 1.26);
+  padding: 16px 24px;
+  overflow: hidden;
+}
+.emerge-pane-page.visible {
+  top: 4vh;
+  opacity: 1;
+}
+.emerge-pane-page .close-btn {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: 32px;
+  font-family: fantasy;
+  cursor: default;
+  z-index: 12222;
+}
+.emerge-pane-page .close-btn .ly-closeround {
+  font-size: 32px;
+}
 .lyw-view {
   /* 特殊位置 */
 }
 .lyw-view pre {
   white-space: pre-wrap;
   word-wrap: break-word;
-  min-height: 1.5em;
   min-width: 1px;
   font-family: Menlo, Courier, monospace;
 }
@@ -19322,6 +19367,274 @@ button:hover .lyw-view .view-type-hover .lyw-lang-index-1 {
 .mini-lyw-editor input {
   text-align: left;
   margin-bottom: 8px;
+}
+.ly-tutorial-page .alphabet .body,
+.ly-tutorial-page .ly-square,
+.ly-tutorial-page .ly-rules {
+  /* Let's get this party started */
+  /* Track */
+  /* Handle */
+}
+.ly-tutorial-page .alphabet .body::-webkit-scrollbar,
+.ly-tutorial-page .ly-square::-webkit-scrollbar,
+.ly-tutorial-page .ly-rules::-webkit-scrollbar {
+  width: 8px;
+}
+.ly-tutorial-page .alphabet .body::-webkit-scrollbar-track,
+.ly-tutorial-page .ly-square::-webkit-scrollbar-track,
+.ly-tutorial-page .ly-rules::-webkit-scrollbar-track {
+  background: lightgray;
+}
+.ly-tutorial-page .alphabet .body::-webkit-scrollbar-thumb,
+.ly-tutorial-page .ly-square::-webkit-scrollbar-thumb,
+.ly-tutorial-page .ly-rules::-webkit-scrollbar-thumb {
+  background: steelblue;
+}
+.ly-tutorial-page .ly-square {
+  overflow: auto;
+  padding-bottom: 20px;
+}
+.ly-tutorial-page .square-item {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 80px;
+  margin-bottom: 80px;
+}
+.ly-tutorial-page .square-item .title {
+  font-size: 20px;
+  font-family: SimHei;
+}
+.ly-tutorial-page .square-item .desc {
+  font-size: 14px;
+  color: #999;
+}
+.ly-tutorial-page .square-item .title,
+.ly-tutorial-page .square-item .desc {
+  height: 1.5em;
+}
+.ly-tutorial-page .square-item .pinyin {
+  font-size: 48px;
+  margin-top: -20px;
+  color: steelblue;
+}
+.ly-tutorial-page .square-item .b,
+.ly-tutorial-page .square-item .l,
+.ly-tutorial-page .square-item .r,
+.ly-tutorial-page .square-item .tl,
+.ly-tutorial-page .square-item .bl,
+.ly-tutorial-page .square-item .tr,
+.ly-tutorial-page .square-item .br {
+  position: absolute;
+  color: steelblue;
+  font-size: 16px;
+  width: 3em;
+}
+.ly-tutorial-page .square-item .b::after,
+.ly-tutorial-page .square-item .l::after,
+.ly-tutorial-page .square-item .r::after,
+.ly-tutorial-page .square-item .tl::after,
+.ly-tutorial-page .square-item .bl::after,
+.ly-tutorial-page .square-item .tr::after,
+.ly-tutorial-page .square-item .br::after {
+  position: absolute;
+  content: '';
+  border: 1px dashed steelblue;
+}
+.ly-tutorial-page .square-item .r,
+.ly-tutorial-page .square-item .tr,
+.ly-tutorial-page .square-item .br,
+.ly-tutorial-page .square-item .b {
+  right: 0px;
+}
+.ly-tutorial-page .square-item .tl,
+.ly-tutorial-page .square-item .tr {
+  top: 66px;
+}
+.ly-tutorial-page .square-item .l,
+.ly-tutorial-page .square-item .r {
+  top: 111px;
+}
+.ly-tutorial-page .square-item .bl,
+.ly-tutorial-page .square-item .br {
+  top: 144px;
+}
+.ly-tutorial-page .square-item .b {
+  top: 188px;
+}
+.ly-tutorial-page .square-item .b::after {
+  width: 50px;
+  left: -60px;
+  transform: rotate(15deg);
+}
+.ly-tutorial-page .square-item .tl::after {
+  width: 44px;
+  right: -44px;
+  top: 22px;
+  transform: rotate(12deg);
+}
+.ly-tutorial-page .square-item .l::after {
+  width: 55px;
+  right: -55px;
+  top: 11px;
+}
+.ly-tutorial-page .square-item .bl::after {
+  width: 44px;
+  right: -44px;
+  top: 8px;
+  transform: rotate(-8deg);
+}
+.ly-tutorial-page .square-item .tr::after {
+  width: 55px;
+  left: -44px;
+  top: 22px;
+  transform: rotate(-12deg);
+}
+.ly-tutorial-page .square-item .r::after {
+  width: 55px;
+  left: -44px;
+  top: 11px;
+}
+.ly-tutorial-page .square-item .br::after {
+  width: 55px;
+  left: -44px;
+  top: 4px;
+  transform: rotate(12deg);
+}
+.ly-tutorial-page .hengyen {
+  font-size: 16px;
+  padding-left: 15%;
+}
+.ly-tutorial-page .hengyen h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  border-left: 3px solid #333;
+  padding-left: 12px;
+}
+.ly-tutorial-page .hengyen .lyw-view {
+  height: 56px;
+}
+.ly-tutorial-page .hengyen .pinyin {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+.ly-tutorial-page .ly-rules {
+  overflow: auto;
+  tab-size: 2em;
+}
+.ly-tutorial-page .ly-rules ol {
+  display: block;
+  list-style-type: simp-chinese-informal;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+}
+.ly-tutorial-page .ly-rules .example-myth h3 {
+  margin-top: 20px;
+}
+.ly-tutorial-page .ly-rules .example-myth h4 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+.ly-tutorial-page .ly-rules .example-myth article {
+  max-width: 800px;
+  margin: auto;
+}
+.ly-tutorial-page .ly-rules .example-myth .myth-chinese p {
+  text-indent: 2em;
+  line-height: 22px;
+}
+.alphabet {
+  height: 100%;
+}
+.alphabet .head {
+  width: 240px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.alphabet .head .ant-switch {
+  margin: auto;
+}
+.alphabet .body {
+  overflow: auto;
+}
+.alphabet .body > section {
+  float: left;
+  margin-bottom: 24px;
+  margin-right: 16px;
+}
+.alphabet .body > section h3 {
+  margin-bottom: 12px;
+  padding-left: 8px;
+  border-left: 3px solid #333;
+}
+.alphabet aside {
+  display: inline-block;
+  vertical-align: top;
+}
+.alphabet aside.aside-consonant:not(:last-of-type) {
+  margin-right: 16px;
+}
+.alphabet td,
+.alphabet .ant-table-thead > tr > th {
+  text-align: center;
+  padding: 6px;
+}
+.alphabet .ant-table-tbody > tr:hover td {
+  background: inherit;
+}
+.alphabet .ant-table-tbody > tr > td {
+  padding: 4px;
+  font-family: Menlo, Courier, monospace;
+}
+.alphabet .ant-table-pagination {
+  display: none;
+}
+.alphabet td.ly .lyw-view {
+  transform: scale(1.5);
+  position: relative;
+  top: 2px;
+}
+.alphabet td.note {
+  font-size: 14px;
+}
+.alphabet .alphabet-example-unit:not(:last-child)::after {
+  content: '\FF0C';
+  vertical-align: middle;
+}
+.alphabet section.tone .note {
+  margin-top: 12px;
+}
+.alphabet section.heng .heng-detailed .heng-block {
+  margin-bottom: 12px;
+}
+.alphabet section.heng .heng-detailed .example {
+  padding-left: 48px;
+  font-size: 12px;
+  font-style: italic;
+}
+.alphabet section.heng .heng-detailed .example .lyw-view {
+  margin-right: 8px;
+}
+.alphabet section.heng .heng-detailed .note {
+  padding-left: 32px;
+}
+.alphabet section.heng .heng-detailed .voiced {
+  transform: translate(0, 15px);
+}
+.alphabet section.heng .heng-detailed .gramma-r {
+  width: 32px;
+  transform: translate(10px);
+}
+.alphabet section.heng .not-detailed .voiced {
+  transform: scale(2) translate(0, 4px);
 }
 .editor-nav {
   -webkit-display: flex;

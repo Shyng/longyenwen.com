@@ -2,7 +2,9 @@ import React from 'react';
 import { Icon, Modal, Popover, Input, Button, Radio, message, Tooltip } from 'antd';
 import LywView, { LywHoverCn, LywBtn } from 'components/lyw-view/index.jsx';
 import MiniLywEditor from 'components/mini-lyw-editor/index.jsx';
-import Alphabet from 'components/alphabet/index.jsx';
+import EmergePane from 'components/emerge-pane/index.jsx';
+// import Alphabet from 'components/alphabet/index.jsx';
+import Tutorial from 'components/ly-tutorial/index.jsx';
 import './index.less';
 
 const RadioButton = Radio.Button;
@@ -19,14 +21,19 @@ class LywNav extends React.Component {
   }
   render() {
     // console.log(this.state);
+    const { tutorialVisible } = this.state;
     return (
       <div className="editor-nav">
         <div className="editor-nav-side">
-          {/* <Icon type="home" /> */}
-          <Icon type="question-circle" onClick={this.showTutorial} />
+          <Tooltip placement="bottom" title="帮助">
+            <span
+              className="iconfont-ly ly-help"
+              onClick={() => { this.setState({ tutorialVisible: true }); }}
+            />
+          </Tooltip>
           <Tooltip placement="bottom" title="龙彦文 认读 训练">
             <span
-              className="iconfont iconfont-reading"
+              className="iconfont-ly ly-study1"
               onClick={() => { window.open(songtsyUrl) }}
             />
           </Tooltip>
@@ -55,17 +62,22 @@ class LywNav extends React.Component {
             trigger="click"
           ><Icon type="save" /></Popover>
         </div>
+        <EmergePane
+          visible={tutorialVisible}
+          onClose={() => { this.setState({ tutorialVisible: false }); }}
+        ><Tutorial /></EmergePane>
       </div>
     );
   }
-  showTutorial = () => {
-    return (
-      <div className={`tutorial-pane ${
-        this.state.tutorialVisible ? 'visible' : 'hidden'
-      }`}>
-        <Alphabet />
-      </div>
-    );
+  // showTutorial = () => {
+  //   this.setState({ tutorialVisible: true });
+    // return (
+    //   <div className={`tutorial-pane ${
+    //     this.state.tutorialVisible ? 'visible' : 'hidden'
+    //   }`}>
+    //     <Alphabet />
+    //   </div>
+    // );
     // Modal.info({
     //   title: '龙彦文 简单 教程',
     //   content: <Alphabet />,
@@ -74,7 +86,7 @@ class LywNav extends React.Component {
     //   okText: '已 知晓',
     //   className: 'alphabet-dialog',
     // });
-  }
+  // }
   _settingMenu = () => {
     const { settingCb, settings } = this.props;
     return (
@@ -171,9 +183,7 @@ class LywNav extends React.Component {
       </li>
     );
   }
-  _tutorial = () => {
 
-  }
   onRewrite = (index) => {
     // console.log(this.state);
     const { savingData = [] } = this.props;

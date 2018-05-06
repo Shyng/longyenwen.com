@@ -16,9 +16,12 @@
         vertical-align: middle;
         padding: 16px;
         padding-top: 16px + @navH;
-    }
-    .lyw-view {
-        overflow: auto;
+        pre {
+            min-height: 1.5em;
+        }
+        .lyw-view {
+            overflow: auto;
+        }
     }
     .lyw-editor {
         textarea {
@@ -32,5 +35,17 @@
                 resize: none;
             }
         }
+    }
+}
+
+.emerge-pane-page {
+    .alphabet .body {
+        height: ~"calc(100% - 110px)";
+    }
+    .ly-square {
+        height: ~"calc(100% - 60px)";
+    }
+    .ly-rules {
+        height: ~"calc(100% - 60px)";
     }
 }

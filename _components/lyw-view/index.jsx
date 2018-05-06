@@ -12,16 +12,16 @@ class LywView extends React.Component {
     super(props);
     this.cls = klas('lyw-view',
       String(props.className || ''),
-      // { [props.className]: props.className },
       {
         'is-win': osIsWin,
         'align-center': props.align === 'c',
         'single': typeof props.dataSource === 'string',
       });
+    const fontStyle = Object.assign({
+      // fontSize: DEFAULT_FONT_SIZE,
+    }, props.fontStyle);
     this.state = {
-      fontStyle: Object.assign({
-        // fontSize: DEFAULT_FONT_SIZE,
-      }, props.fontStyle),
+      fontStyle,
     };
   }
   static defaultProps = {
@@ -142,11 +142,12 @@ class LywView extends React.Component {
     // console.log(this.state.fontStyle)
     // console.log(str);
     // return str.toUpperCase();
-    const { fontStyle } = this.state;
+    // let { fontStyle } = this.state;
+    const fontStyle = { ...this.state.fontStyle };
     fontStyle.color && (fontStyle.fill = fontStyle.color);
     const len = str.length;
     // const patt = /[a-z]+[0-5]/;
-    const patt = /([a-z]+[0-4])|([a-z'\-]{2,}5)/;
+    const patt = /([a-zü]+[0-4])|([a-zü'\-]{2,}5)/;
     let result = [];
     let i = 0;
     let n = 0;

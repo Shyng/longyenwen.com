@@ -7,12 +7,17 @@ const {
 } = tools;
 
 const appName = process.argv[2];
+const isMod = process.argv[3] === 'mod';
+const dirName = isMod ? '_components' : '_src';
+// console.log(process.argv);
+
+// console.log(process.argv);
 
 const nameValidation = (name, cb, rl) => {
   if (!name) {
     rl && rl.close();
     rlAsk('请输入应用名');
-  } else if (dirExistsSync(`_src/${name}`)) {
+  } else if (dirExistsSync(`${dirName}/${name}`)) {
     rl && rl.close();
     rlAsk(`${name}已存在，换一个吧`);
   } else {
@@ -43,16 +48,17 @@ function createNewApp(name) {
     // console.log(str);
     return str[1] ? str[1].toUpperCase() : str[0].toUpperCase();
   });
-  fs.mkdir(`_src/${name}/`, (err) => {
-    fs.readdirSync(`_src/_template`).forEach((file) => {
-      fs.readFile(`_src/_template/${file}`, (err, data) => {
+
+  fs.mkdir(`${dirName}/${name}/`, (err) => {
+    fs.readdirSync(`${dirName}/_template`).forEach((file) => {
+      fs.readFile(`${dirName}/_template/${file}`, (err, data) => {
         // console.log(data.toString());
         !err && fs.writeFile(
-          `_src/${name}/${file}`,
+          `${dirName}/${name}/${file}`,
           data.toString()
             .replace(/Xxx/g, camel).replace(/xxx\-page/g, `${name}-page`),
           err => {
-            !err && console.log(`成功创建文件_src/${name}/${file}`);
+            !err && console.log(`成功创建文件${dirName}/${name}/${file}`);
           }
         );
       });

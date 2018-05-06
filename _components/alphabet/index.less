@@ -1,0 +1,112 @@
+.alphabet {
+    height: 100%;
+    .head {
+        width: 240px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        .ant-switch {
+            // margin-left: 20px;
+            margin: auto;
+        }
+    }
+    .body {
+        // height: ~"calc(100% - 60px)";
+        overflow: auto;
+        >section {
+            float: left;
+            margin-bottom: 24px;
+            margin-right: 16px;
+            h3 {
+                margin-bottom: 12px;
+                padding-left: 8px;
+                border-left: 3px solid #333;
+            }
+        }
+    }
+    aside {
+        // width: 400px;
+        display: inline-block;
+        vertical-align: top;
+        &.aside-consonant {
+            &:not(:last-of-type) {
+                margin-right: 16px;
+            }
+        }
+    }
+    td,
+    .ant-table-thead>tr>th {
+        text-align: center;
+        padding: 6px;
+    }
+    .ant-table-tbody {
+        >tr {
+            &:hover {
+                td {
+                    background: inherit;
+                }
+            }
+            >td {
+                padding: 4px;
+                font-family: Menlo, Courier, monospace;
+            }
+        }
+    }
+    .ant-table-pagination {
+        display: none;
+    }
+    td.ly {
+        .lyw-view {
+            transform: scale(1.5);
+            position: relative;
+            top: 2px;
+        }
+    }
+    td.note {
+        font-size: 14px;
+    }
+    .alphabet-example-unit {
+        // font-size: 12px;
+        // margin-right: 8px;
+        &:not(:last-child)::after {
+            content: '，';
+            vertical-align: middle;
+        }
+    }
+    section.tone {
+        .note {
+            margin-top: 12px;
+        }
+    }
+    section.heng {
+        .heng-detailed {
+            .heng-block {
+                margin-bottom: 12px;
+            }
+            .example {
+                padding-left: 48px;
+                font-size: 12px;
+                font-style: italic;
+                .lyw-view {
+                    margin-right: 8px;
+                }
+            }
+            .note {
+                padding-left: 32px;
+            }
+            .voiced {
+                transform: translate(0, 15px);
+            }
+            .gramma-r {
+                width: 32px;
+                transform: translate(10px);
+            }
+        }
+        .not-detailed {
+            .voiced {
+                transform: scale(2) translate(0, 4px);
+            }
+        }
+    }
+}
